@@ -1,0 +1,113 @@
+﻿@model WebApp_complete.EMP.Employee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EMP_TABLE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Doj)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Doj)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aadhar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aadhar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.AddressLine1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address.AddressLine1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.AddressLine2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address.AddressLine2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.ZipCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address.ZipCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.LandMark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address.LandMark)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.CountryId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address.CountryId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.StateId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address.StateId)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Update", new { id = Model.Empid }) |
+    @Html.ActionLink("Back to List", "Edit")
+</p>

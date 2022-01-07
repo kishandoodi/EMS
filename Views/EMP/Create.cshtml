@@ -1,0 +1,87 @@
+﻿@model  WebApp_complete.EMP.Employee
+@{
+    ViewBag.Title = "Create";
+}
+@using (Html.BeginForm("Index1", "EMP", FormMethod.Post))
+{
+<div class="container">
+    <div class="form-group">
+
+        <label>Name </label><br>
+
+        @Html.TextBoxFor(a => a.Fname, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Lname </label><br>
+
+        @Html.TextBoxFor(x => x.Lname, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Age </label><br>
+
+        @Html.TextBoxFor(x => x.Age, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Doj </label><br>
+
+        @Html.TextBoxFor(x => x.Doj, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Pan</label><br>
+
+        @Html.TextAreaFor(x => x.Pan, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Aadhar</label><br>
+
+        @Html.TextAreaFor(x => x.Aadhar, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Salary</label><br>
+
+        @Html.TextAreaFor(x => x.Salary, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>AddressLine1</label><br>
+
+        @Html.TextAreaFor(x => x.Address.AddressLine1, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>AddressLine2</label><br>
+
+        @Html.TextAreaFor(x => x.Address.AddressLine2, new { @class = "form-control" })
+    </div><div class="form-group">
+        <label>ZipCode</label><br>
+
+        @Html.TextAreaFor(x => x.Address.ZipCode, new { @class = "form-control" })
+    </div><div class="form-group">
+        <label>LandMark</label><br>
+
+        @Html.TextAreaFor(x => x.Address.LandMark, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Country</label><br>
+
+        @Html.DropDownListFor(m => m.Address.CountryId, Model.Countries, "Please select", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>State</label><br>
+
+        @Html.DropDownListFor(m => m.Address.StateId, Model.States, "Please select", new { @class = "form-control" })
+
+    </div>
+
+
+
+    <div>
+        <button type="submit" class="btn-btn-primary">submit</button>
+        <button type="reset" class="btn-btn-danger">cancel</button>
+    </div>
+
+
+
+
+
+</div>
+}
