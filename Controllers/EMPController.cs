@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using WebApp_complete.EMP;
+using WebApp_complete.Models;
 
 namespace WebApp_complete.Controllers
 {
@@ -11,18 +12,32 @@ namespace WebApp_complete.Controllers
     public class EMPController : Controller
     {
         readonly EMSEntities1 dbObj = new EMSEntities1();
-        
 
-        public ActionResult Create(Employee obj)
+
+        public ActionResult Create()
         {
+            var obj = new EmployeeModel();
+            var stateList = dbObj.States.Select(s => new SelectListItem
+            {
+                Text = s.StateName,
+                Value = s.StateId.ToString()
+            }).ToList();
+            var countryList = dbObj.Countries.Select(s => new SelectListItem
+            {
+                Value = s.CountryId.ToString(),
+                Text = s.CountryName
+            }).ToList();
+
+            obj.Countries = countryList;
+            obj.States = stateList;
             if (obj != null)
                 return View(obj);
             else
                 return View();
 
         }
-         [HttpPost]
-        public void Index1(Employee model)
+        [HttpPost]
+        public ActionResult Create(EmployeeModel model)
         {
             Employee obj = new Employee();
             if (ModelState.IsValid)
@@ -37,14 +52,14 @@ namespace WebApp_complete.Controllers
                 obj.Salary = model.Salary;
 
                 obj.Address = new Address();
-                obj.Address.AddressId = model.Address.AddressId; 
-                obj.Address.AddressLine1 = model.Address.AddressLine1;
-                obj.Address.AddressLine2 = model.Address.AddressLine2;
-                obj.Address.ZipCode = model.Address.ZipCode;
-                obj.Address.LandMark = model.Address.LandMark;
-                obj.Address.StateId = model.Address.StateId;
-                obj.Address.CountryId = model.Address.CountryId;
-                
+                //obj.Address.AddressId = model.Address.AddressId;
+                obj.Address.AddressLine1 = model.AddressLine1;
+                obj.Address.AddressLine2 = model.AddressLine2;
+                obj.Address.ZipCode = model.ZipCode;
+                obj.Address.LandMark = model.LandMark;
+                obj.Address.StateId = model.StateId;
+                obj.Address.CountryId = model.CountryId;
+
 
                 /*obj.Country = new Country();
                 obj.Country.CountryId = model.Country.CountryId;
@@ -56,7 +71,7 @@ namespace WebApp_complete.Controllers
                 obj.State.StateId = model.State.StateId;
                 obj.State.StateName = model.State.StateName;
                 obj.State.StateCode = model.State.StateCode;*/
-                
+
                 //obj.Address.StateId = model.Address.StateId;
 
                 if (model.Empid == 0)
@@ -64,10 +79,10 @@ namespace WebApp_complete.Controllers
                     dbObj.Employees.Add(obj); // To Insert record
                     dbObj.SaveChanges();
 
-               // obj.Address.Country = new Country();
-                //obj.Address.CountryId = model.Address.CountryId;
+                    // obj.Address.Country = new Country();
+                    //obj.Address.CountryId = model.Address.CountryId;
 
-                //obj.Address.State =
+                    //obj.Address.State =
 
                 }
 
@@ -77,7 +92,7 @@ namespace WebApp_complete.Controllers
                         dbObj.SaveChanges();
 
                     }*/
-                
+
                 else
                 {
                     dbObj.Entry(obj).State = EntityState.Modified;
@@ -85,7 +100,7 @@ namespace WebApp_complete.Controllers
                 }
             }
             //ModelState.Clear();
-            RedirectToAction("List");
+            return RedirectToAction("List");
         }
         public ActionResult List()
         {
@@ -95,16 +110,58 @@ namespace WebApp_complete.Controllers
         }
         public ActionResult Edit(int Id)
         {
+            //var obj = new EmployeeModel();
+            // var stateList = dbObj.States.Select(s => new SelectListItem
+            //{
+            //    Text = s.StateName,
+            //    Value = s.StateId.ToString()
+            // }).ToList();
+            // var countryList = dbObj.Countries.Select(s => new SelectListItem
+            // {
+            //    Value = s.CountryId.ToString(),
+            //    Text = s.CountryName
+            //}).ToList();
 
-            var emp = dbObj.Employees.Where(x => x.Empid == Id).FirstOrDefault();
+            var emp1 = dbObj.Employees.Where(x => x.Empid == Id).FirstOrDefault();
 
+            var emp = dbObj.Employees.Where(x => x.Empid == Id).Select(
+                e => new EmployeeModel()
+                {
+                    Empid = e.Empid,
+                    Fname = e.Fname,
+                    Lname = e.Lname,
+                    Doj = e.Doj,
+                    Age = e.Age,
+                    Pan = e.Pan,
+                    Salary = e.Salary,
+                    Aadhar = e.Aadhar,
+                    AddressLine1 = e.Address.AddressLine1,
+                    AddressLine2 = e.Address.AddressLine2,
+                    ZipCode = e.Address.ZipCode,
+                    LandMark = e.Address.LandMark,
+                    CountryId = e.Address.CountryId,
+                    StateId = e.Address.StateId,
+                }).FirstOrDefault();
+            var stateList = dbObj.States.Select(s => new SelectListItem
+            {
+                Text = s.StateName,
+                Value = s.StateId.ToString()
+            }).ToList();
+            var countryList = dbObj.Countries.Select(s => new SelectListItem
+            {
+                Value = s.CountryId.ToString(),
+                Text = s.CountryName
+            }).ToList();
+
+            emp.Countries = countryList;
+            emp.States = stateList;
             return View(emp);
         }
 
         /*///this is not working//
         public ActionResult Update(EMP_TABLE emp)
         {
-            var Fname = emp.Fname;
+            var Fname = emp.Fname; 
             var Lname = emp.Lname;
             var Age = emp.Age;
             var Doj = emp.Doj;
@@ -115,7 +172,7 @@ namespace WebApp_complete.Controllers
 
         }*/
         [HttpPost]
-        public ActionResult Edit(Employee model)
+        public ActionResult Edit(EmployeeModel model)
         {
             var empl = dbObj.Employees.Where(s => s.Empid == model.Empid).FirstOrDefault();
             empl.Fname = model.Fname;
@@ -127,12 +184,12 @@ namespace WebApp_complete.Controllers
             empl.Aadhar = model.Aadhar;
 
             empl.Address = new Address();
-            empl.Address.AddressLine1 = model.Address.AddressLine1;
-            empl.Address.AddressLine2 = model.Address.AddressLine2;
-            empl.Address.ZipCode = model.Address.ZipCode;
-            empl.Address.LandMark = model.Address.LandMark;
-            empl.Address.CountryId = model.Address.CountryId;
-            empl.Address.StateId=model.Address.StateId;
+            empl.Address.AddressLine1 = model.AddressLine1;
+            empl.Address.AddressLine2 = model.AddressLine2;
+            empl.Address.ZipCode = model.ZipCode;
+            empl.Address.LandMark = model.LandMark;
+            empl.Address.CountryId = model.CountryId;
+            empl.Address.StateId = model.StateId;
             dbObj.SaveChanges();
             //dbObj.Remove(empl);
             //dbObj.Add(Id);
@@ -233,7 +290,7 @@ namespace WebApp_complete.Controllers
             var sta = dbObj.States.Where(x => x.StateId == id).First();
             dbObj.States.Remove(sta);
             dbObj.SaveChanges();
-            var list = dbObj.States.ToList(); 
+            var list = dbObj.States.ToList();
             return View("StateList", list);
         }
         public ActionResult CountryList()
@@ -288,27 +345,27 @@ namespace WebApp_complete.Controllers
         {
             Employee model = new Employee();
 
-             var CountryList = dbObj.Countries.ToList();
+            var CountryList = dbObj.Countries.ToList();
             var allStatelist = dbObj.States.Where(m => m.CountryId == defaultCountryId).ToList();
             var defaultStateId = allStatelist.Select(m => m.StateId).FirstOrDefault();
 
 
-            model.Countries = new SelectList(CountryList, "CountryId", "CountryName", defaultCountryId);
-            model.States = new SelectList(allStatelist, "StateId", "StateName", defaultStateId);
-           
+            //model.Countries = new SelectList(CountryList, "CountryId", "CountryName", defaultCountryId);
+            //model.States = new SelectList(allStatelist, "StateId", "StateName", defaultStateId);
+
 
             return View(model);
         }
-       /* public ActionResult DropDownState()
-        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-           
+        /* public ActionResult DropDownState()
+         {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 
-            var StateList = dbObj.States.ToList();
 
-            ViewBag.StateName = new SelectList(StateList, "StateId", "StateName","StateCode");
-           
-            return View();
-        }*/
+             var StateList = dbObj.States.ToList();
+
+             ViewBag.StateName = new SelectList(StateList, "StateId", "StateName","StateCode");
+
+             return View();
+         }*/
 
 
     }

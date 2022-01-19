@@ -12,7 +12,8 @@ namespace WebApp_complete.EMP
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using WebApp_complete.Models;
+
     public partial class EMSEntities1 : DbContext
     {
         public EMSEntities1()
@@ -29,7 +30,7 @@ namespace WebApp_complete.EMP
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<EmployeeModel> EmployeeModels { get; set; }
         public virtual DbSet<State> States { get; set; }
-        
     }
 }

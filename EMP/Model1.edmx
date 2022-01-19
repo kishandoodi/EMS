@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="id" />
@@ -143,11 +143,37 @@
             <End Role="State" EntitySet="State" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EMSEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accounts" EntityType="EMSModel.account" />
+          <EntitySet Name="Addresses" EntityType="EMSModel.Address" />
+          <EntitySet Name="Countries" EntityType="EMSModel.Country" />
+          <EntitySet Name="Employees" EntityType="EMSModel.Employee" />
+          <EntitySet Name="States" EntityType="EMSModel.State" />
+          <AssociationSet Name="FK__Address__Country__208CD6FA" Association="EMSModel.FK__Address__Country__208CD6FA">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Address__StateId__1F98B2C1" Association="EMSModel.FK__Address__StateId__1F98B2C1">
+            <End Role="State" EntitySet="States" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__Addres__2180FB33" Association="EMSModel.FK__Employee__Addres__2180FB33">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__State__CountryId__1CBC4616" Association="EMSModel.FK__State__CountryId__1CBC4616">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Country" Association="EMSModel.FK_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="id" />
@@ -161,15 +187,15 @@
             <PropertyRef Name="AddressId" />
           </Key>
           <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddressLine1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="LandMark" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
           <Property Name="CountryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Country" Relationship="Self.FK__Address__Country__208CD6FA" FromRole="Address" ToRole="Country" />
-          <NavigationProperty Name="State" Relationship="Self.FK__Address__StateId__1F98B2C1" FromRole="Address" ToRole="State" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__Addres__2180FB33" FromRole="Address" ToRole="Employee" />
+          <NavigationProperty Name="Country" Relationship="EMSModel.FK__Address__Country__208CD6FA" FromRole="Address" ToRole="Country" />
+          <NavigationProperty Name="State" Relationship="EMSModel.FK__Address__StateId__1F98B2C1" FromRole="Address" ToRole="State" />
+          <NavigationProperty Name="Employees" Relationship="EMSModel.FK__Employee__Addres__2180FB33" FromRole="Address" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -178,9 +204,9 @@
           <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CountryName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CountryCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__Country__208CD6FA" FromRole="Country" ToRole="Address" />
-          <NavigationProperty Name="States" Relationship="Self.FK__State__CountryId__1CBC4616" FromRole="Country" ToRole="State" />
-          <NavigationProperty Name="States1" Relationship="Self.FK_Country" FromRole="Country" ToRole="State" />
+          <NavigationProperty Name="Addresses" Relationship="EMSModel.FK__Address__Country__208CD6FA" FromRole="Country" ToRole="Address" />
+          <NavigationProperty Name="States" Relationship="EMSModel.FK__State__CountryId__1CBC4616" FromRole="Country" ToRole="State" />
+          <NavigationProperty Name="States1" Relationship="EMSModel.FK_Country" FromRole="Country" ToRole="State" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -195,7 +221,7 @@
           <Property Name="Aadhar" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Salary" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AddressId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Employee__Addres__2180FB33" FromRole="Employee" ToRole="Address" />
+          <NavigationProperty Name="Address" Relationship="EMSModel.FK__Employee__Addres__2180FB33" FromRole="Employee" ToRole="Address" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -205,13 +231,13 @@
           <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StateCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CountryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__StateId__1F98B2C1" FromRole="State" ToRole="Address" />
-          <NavigationProperty Name="Country" Relationship="Self.FK__State__CountryId__1CBC4616" FromRole="State" ToRole="Country" />
-          <NavigationProperty Name="Country1" Relationship="Self.FK_Country" FromRole="State" ToRole="Country" />
+          <NavigationProperty Name="Addresses" Relationship="EMSModel.FK__Address__StateId__1F98B2C1" FromRole="State" ToRole="Address" />
+          <NavigationProperty Name="Country" Relationship="EMSModel.FK__State__CountryId__1CBC4616" FromRole="State" ToRole="Country" />
+          <NavigationProperty Name="Country1" Relationship="EMSModel.FK_Country" FromRole="State" ToRole="Country" />
         </EntityType>
         <Association Name="FK__Address__Country__208CD6FA">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <End Type="EMSModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="EMSModel.Address" Role="Address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="CountryId" />
@@ -222,8 +248,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Address__StateId__1F98B2C1">
-          <End Role="State" Type="Self.State" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <End Type="EMSModel.State" Role="State" Multiplicity="1" />
+          <End Type="EMSModel.Address" Role="Address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="State">
               <PropertyRef Name="StateId" />
@@ -234,8 +260,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Employee__Addres__2180FB33">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Type="EMSModel.Address" Role="Address" Multiplicity="1" />
+          <End Type="EMSModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Address">
               <PropertyRef Name="AddressId" />
@@ -246,8 +272,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__State__CountryId__1CBC4616">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <End Type="EMSModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="EMSModel.State" Role="State" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="CountryId" />
@@ -258,8 +284,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Country">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <End Type="EMSModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="EMSModel.State" Role="State" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="CountryId" />
@@ -269,33 +295,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EMSEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="accounts" EntityType="Self.account" />
-          <EntitySet Name="Addresses" EntityType="Self.Address" />
-          <EntitySet Name="Countries" EntityType="Self.Country" />
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
-          <EntitySet Name="States" EntityType="Self.State" />
-          <AssociationSet Name="FK__Address__Country__208CD6FA" Association="Self.FK__Address__Country__208CD6FA">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Address__StateId__1F98B2C1" Association="Self.FK__Address__StateId__1F98B2C1">
-            <End Role="State" EntitySet="States" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employee__Addres__2180FB33" Association="Self.FK__Employee__Addres__2180FB33">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK__State__CountryId__1CBC4616" Association="Self.FK__State__CountryId__1CBC4616">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="State" EntitySet="States" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Country" Association="Self.FK_Country">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="State" EntitySet="States" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -305,56 +304,56 @@
           <EntitySetMapping Name="accounts">
             <EntityTypeMapping TypeName="EMSModel.account">
               <MappingFragment StoreEntitySet="account">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="EMSModel.Address">
               <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
-                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="LandMark" ColumnName="LandMark" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="LandMark" ColumnName="LandMark" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="EMSModel.Country">
               <MappingFragment StoreEntitySet="Country">
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
                 <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="EMSModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Empid" ColumnName="Empid" />
-                <ScalarProperty Name="Fname" ColumnName="Fname" />
-                <ScalarProperty Name="Lname" ColumnName="Lname" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="Doj" ColumnName="Doj" />
-                <ScalarProperty Name="Pan" ColumnName="Pan" />
-                <ScalarProperty Name="Aadhar" ColumnName="Aadhar" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Aadhar" ColumnName="Aadhar" />
+                <ScalarProperty Name="Pan" ColumnName="Pan" />
+                <ScalarProperty Name="Doj" ColumnName="Doj" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Empid" ColumnName="Empid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="States">
             <EntityTypeMapping TypeName="EMSModel.State">
               <MappingFragment StoreEntitySet="State">
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
-                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

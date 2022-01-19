@@ -11,10 +11,7 @@ namespace WebApp_complete.EMP
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Web.Mvc;
-
+    
     public partial class Employee
     {
         public int Empid { get; set; }
@@ -28,27 +25,5 @@ namespace WebApp_complete.EMP
         public int AddressId { get; set; }
     
         public virtual Address Address { get; set; }
-        public int StateId { get; set; }
-        public int CountryId { get; set; }
-        
-        public SelectList Countries { get; set; }
-        public SelectList States { get; set; }
-
     }
-
-    /*public class Country
-    {
-        [Key]
-        public int CountryId { get; set; }
-        public string CountryName { get; set; }
-    }
-    public class State
-    {
-        [Key]
-        public int StateId { get; set; }
-        public string StateName { get; set; }
-        public int CountryId { get; set; }
-        [ForeignKey("CountryId")]
-        public Country Country { get; set; }
-    }*/
 }

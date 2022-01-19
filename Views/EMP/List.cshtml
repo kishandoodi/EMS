@@ -85,10 +85,10 @@
                             @Html.DisplayFor(modelItem => item.Address.LandMark)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Address.Country)
+                            @Html.DisplayFor(modelItem => item.Address.Country.CountryName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Address.State)
+                            @Html.DisplayFor(modelItem => item.Address.State.StateName)
                         </td>
 
                         <td>   <a href="@Url.Action("Edit", new { id = item.Empid }) " class="btn btn-success">Edit</a> </td>
