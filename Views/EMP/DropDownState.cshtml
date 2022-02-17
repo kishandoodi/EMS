@@ -1,9 +1,0 @@
-﻿@model  WebApp_complete.EMP.State
-
-@{
-    ViewBag.Title = "DropDownState";
-}
-
-<h2>DropDownState</h2>
-
-@Html.DropDownList("State", (IEnumerable<SelectListItem>)ViewBag.StateName as SelectList, "select country")

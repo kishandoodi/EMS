@@ -1,4 +1,4 @@
-﻿@model WebApp_complete.EMP.Employee
+﻿@model WebApp_complete.Models.EmployeeModel
 
 @{
     ViewBag.Title = "Details";
@@ -8,10 +8,10 @@
 
 <div>
     <h4>EMP_TABLE</h4>
-    <hr />
+    
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Fname)
+            Fname:
         </dt>
 
         <dd>
@@ -19,15 +19,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Lname)
+           Lname:
         </dt>
-
+        
         <dd>
             @Html.DisplayFor(model => model.Lname)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Age)
+            Age:
         </dt>
 
         <dd>
@@ -35,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Doj)
+            Doj:
         </dt>
 
         <dd>
@@ -43,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Pan)
+            Pan:
         </dt>
 
         <dd>
@@ -51,7 +51,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Aadhar)
+            Aadhar:
         </dt>
 
         <dd>
@@ -59,52 +59,87 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Salary)
+           Salary:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Salary)
         </dd>
+        <dt>
+            DepartmentName:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department.DepartmentName)
+        </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Address.AddressLine1)
+            AddressLine1:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Address.AddressLine1)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Address.AddressLine2)
+            AddressLine2:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Address.AddressLine2)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Address.ZipCode)
+            ZipCode:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Address.ZipCode)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Address.LandMark)
+            LandMark:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Address.LandMark)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Address.CountryId)
+            CountryName:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Address.CountryId)
+            @Html.DisplayFor(model => model.Address.Country.CountryName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Address.StateId)
+            StateName:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Address.StateId)
+            @Html.DisplayFor(model => model.Address.State.StateName)
         </dd>
+        <dt>
+            Skill:
+        </dt>
+        <dd>
+            <div class="tag-container">
+                @foreach (var skill in Model.Skills)
+                {
+                    <div class="tag border-area">
+                    @skill.Name
+                   </div>
+                }
 
+            </div>
+        </dd>
+        <dt>
+            Hobbies:
+        </dt>
 
+        <dd>
+            <div class="tag-container">
+                @foreach (var Hobby in Model.Hobbies)
+                {
+                    <div class="tag border-area">
+                        @Hobby.Name
+                        </div>
+                }
+
+                    </div>
+
+</dd>
     </dl>
 </div>
 <p>

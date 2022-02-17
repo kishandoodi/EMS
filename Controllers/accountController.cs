@@ -8,7 +8,7 @@ using System.Web.Security;
 
 namespace WebApp_complete.Controllers
 {
-    public class accountController : Controller
+    public class AccountController : Controller
     {
         //GET: account
         public ActionResult Login()
@@ -16,11 +16,11 @@ namespace WebApp_complete.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(account model)    
+        public ActionResult Login(User model)    
         {
-            using (var context = new EMSEntities1())
+            using (var context = new EMSEntities())
             {
-                bool isValid = context.accounts.Any(x=>x.username == model.username && x.password == model.password);
+                bool isValid = context.Users.Any(x=>x.username == model.username && x.password == model.password);
                 if (isValid)
                 {
                     FormsAuthentication.SetAuthCookie(model.username, false);   
@@ -30,25 +30,25 @@ namespace WebApp_complete.Controllers
             }
             return View();
         }
-        public ActionResult signup()
+        public ActionResult Signup()
         {
             return View();
         }
         [HttpPost]
 
-        public ActionResult signup(account model)
+        public ActionResult Signup(User model)
         {
-            using (var context = new EMSEntities1())
+            using (var context = new EMSEntities())
             {
-                context.accounts.Add(model);
+                context.Users.Add(model);
                 context.SaveChanges();
-                // ok?
+                // ok?....
 
 
             }
             return RedirectToAction("Login");
         }
-        public ActionResult Logout(account model)
+        public ActionResult Logout()
         {
             Session.Abandon();
             FormsAuthentication.SignOut();

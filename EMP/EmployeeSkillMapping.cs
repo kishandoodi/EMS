@@ -12,10 +12,13 @@ namespace WebApp_complete.EMP
     using System;
     using System.Collections.Generic;
     
-    public partial class account
+    public partial class EmployeeSkillMapping
     {
-        public int id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
+        public int EmployeeSkillMapingId { get; set; }
+        public int EmployeeId { get; set; }
+        public int SkillID { get; set; }
+    
+        public virtual Employee Employee { get; set; }
+        public virtual Skill Skill { get; set; }
     }
 }

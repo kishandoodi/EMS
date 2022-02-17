@@ -22,3 +22,20 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.btn-action {
+    margin-right: 5px;
+}
+
+.border-area {
+    border:1px solid #dfdfdf;
+}
+.tag-container {
+    display: flex;
+}
+.tag {
+    flex-direction: row;
+    padding: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}

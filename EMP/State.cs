@@ -24,10 +24,11 @@ namespace WebApp_complete.EMP
         public string StateName { get; set; }
         public string StateCode { get; set; }
         public int CountryId { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
+        public Nullable<System.DateTime> ModifiedDateTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual Country Country { get; set; }
-        public virtual Country Country1 { get; set; }
     }
 }

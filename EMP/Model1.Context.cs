@@ -12,12 +12,11 @@ namespace WebApp_complete.EMP
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using WebApp_complete.Models;
-
-    public partial class EMSEntities1 : DbContext
+    
+    public partial class EMSEntities : DbContext
     {
-        public EMSEntities1()
-            : base("name=EMSEntities1")
+        public EMSEntities()
+            : base("name=EMSEntities")
         {
         }
     
@@ -26,11 +25,16 @@ namespace WebApp_complete.EMP
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<account> accounts { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<EmployeeModel> EmployeeModels { get; set; }
+        public virtual DbSet<EmployeeHobbiesMaping> EmployeeHobbiesMapings { get; set; }
+        public virtual DbSet<EmployeeSkillMapping> EmployeeSkillMappings { get; set; }
+        public virtual DbSet<Hobby> Hobbies { get; set; }
+        public virtual DbSet<Nominee> Nominees { get; set; }
+        public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

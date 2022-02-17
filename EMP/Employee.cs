@@ -14,6 +14,13 @@ namespace WebApp_complete.EMP
     
     public partial class Employee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Employee()
+        {
+            this.EmployeeHobbiesMapings = new HashSet<EmployeeHobbiesMaping>();
+            this.EmployeeSkillMappings = new HashSet<EmployeeSkillMapping>();
+        }
+    
         public int Empid { get; set; }
         public string Fname { get; set; }
         public string Lname { get; set; }
@@ -23,7 +30,17 @@ namespace WebApp_complete.EMP
         public string Aadhar { get; set; }
         public string Salary { get; set; }
         public int AddressId { get; set; }
+        public int DepartmentID { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
+        public Nullable<System.DateTime> ModifiedDateTime { get; set; }
+        public Nullable<int> UserId { get; set; }
     
         public virtual Address Address { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeHobbiesMaping> EmployeeHobbiesMapings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeSkillMapping> EmployeeSkillMappings { get; set; }
     }
 }

@@ -19,18 +19,17 @@ namespace WebApp_complete.EMP
         {
             this.Addresses = new HashSet<Address>();
             this.States = new HashSet<State>();
-            this.States1 = new HashSet<State>();
         }
     
         public int CountryId { get; set; }
         public string CountryName { get; set; }
         public string CountryCode { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
+        public Nullable<System.DateTime> ModifiedDateTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<State> States { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<State> States1 { get; set; }
     }
 }

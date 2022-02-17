@@ -11,8 +11,7 @@ namespace WebApp_complete.Controllers
     [Authorize]
     public class EMPController : Controller
     {
-        readonly EMSEntities1 dbObj = new EMSEntities1();
-
+        readonly EMSEntities dbObj = new EMSEntities();
 
         public ActionResult Create()
         {
@@ -27,9 +26,32 @@ namespace WebApp_complete.Controllers
                 Value = s.CountryId.ToString(),
                 Text = s.CountryName
             }).ToList();
+            var DepartmentList = dbObj.Departments.Select(s => new SelectListItem
+            {
+                Value = s.DepartmentID.ToString(),
+                Text = s.DepartmentName
+            }).ToList();
+
+            var skills = dbObj.Skills.Select(s => new CheckModel
+            {
+                Id = s.SkillId,
+                Name = s.SkillName
+            }).ToList();
+            var Hobbies = dbObj.Hobbies.Select(s => new CheckModel
+            {
+                Id = s.HobbiesId,
+                Name = s.HobbyName
+            }).ToList();
+
+
 
             obj.Countries = countryList;
             obj.States = stateList;
+            obj.Departments = DepartmentList;
+            obj.Skills = skills;
+            obj.Hobbies = Hobbies;
+
+
             if (obj != null)
                 return View(obj);
             else
@@ -37,6 +59,7 @@ namespace WebApp_complete.Controllers
 
         }
         [HttpPost]
+
         public ActionResult Create(EmployeeModel model)
         {
             Employee obj = new Employee();
@@ -50,98 +73,130 @@ namespace WebApp_complete.Controllers
                 obj.Pan = model.Pan;
                 obj.Aadhar = model.Aadhar;
                 obj.Salary = model.Salary;
+                obj.CreatedDateTime = DateTime.Now;
+
+                obj.DepartmentID = model.DepartmentID;
 
                 obj.Address = new Address();
-                //obj.Address.AddressId = model.Address.AddressId;
+
                 obj.Address.AddressLine1 = model.AddressLine1;
                 obj.Address.AddressLine2 = model.AddressLine2;
                 obj.Address.ZipCode = model.ZipCode;
                 obj.Address.LandMark = model.LandMark;
                 obj.Address.StateId = model.StateId;
                 obj.Address.CountryId = model.CountryId;
+                obj.Address.CreatedDateTime = DateTime.Now;
+                if (model.Skills != null && model.Skills.Count > 0)
+                {
+                    var selectedSkills = model.Skills.Where(a => a.Checked == true).ToList();
+                    if (selectedSkills != null && selectedSkills.Count > 0)
+                    {
+                        var employeeSkillMappings = new List<EmployeeSkillMapping>();
+                        foreach (var abc in selectedSkills)
+                        {
+                            var empSkill = new EmployeeSkillMapping();
+                            empSkill.SkillID = abc.Id;
+                            empSkill.EmployeeId = obj.Empid;
+                            employeeSkillMappings.Add(empSkill);
+                        }
+                        obj.EmployeeSkillMappings = employeeSkillMappings;
+                    }
+                }
 
 
-                /*obj.Country = new Country();
-                obj.Country.CountryId = model.Country.CountryId;
-                obj.Country.CountryName = model.Country.CountryName;
-                obj.Country.CountryCode = model.Country.CountryCode;
+                if (model.Hobbies != null && model.Hobbies.Count > 0)
+                {
+                    var selectedHobbies = model.Hobbies.Where(a => a.Checked == true).ToList();
+                    if (selectedHobbies != null && selectedHobbies.Count > 0)
+                    {
+                        var employeeHobbiesMapings = new List<EmployeeHobbiesMaping>();
+                        foreach (var abc in selectedHobbies)
+                        {
+                            var empHobby = new EmployeeHobbiesMaping();
+                            empHobby.HobbiesId = abc.Id;
+                            empHobby.EmployeeId = obj.Empid;
+                            employeeHobbiesMapings.Add(empHobby);
+                        }
+                        obj.EmployeeHobbiesMapings = employeeHobbiesMapings;
+                    }
+                }
 
-
-                obj.State = new State();
-                obj.State.StateId = model.State.StateId;
-                obj.State.StateName = model.State.StateName;
-                obj.State.StateCode = model.State.StateCode;*/
-
-                //obj.Address.StateId = model.Address.StateId;
 
                 if (model.Empid == 0)
                 {
                     dbObj.Employees.Add(obj); // To Insert record
                     dbObj.SaveChanges();
 
-                    // obj.Address.Country = new Country();
-                    //obj.Address.CountryId = model.Address.CountryId;
 
-                    //obj.Address.State =
 
                 }
-
-                /*else if (model.AddressId == 0)
-                    {
-                        dbObj.Employees.Add(obj); 
-                        dbObj.SaveChanges();
-
-                    }*/
-
                 else
                 {
                     dbObj.Entry(obj).State = EntityState.Modified;
                     dbObj.SaveChanges();
                 }
             }
-            //ModelState.Clear();
             return RedirectToAction("List");
         }
+
         public ActionResult List()
         {
-            var res = dbObj.Employees.ToList();
-            return View(res);
+            // SELECT MAXIMUM 2 or 3 Skills and Hobbies, to display the List of Employees nice.
+            var emp = dbObj.Employees.Select(e => new EmployeeModel
+            {
+                Empid = e.Empid,
+                Fname = e.Fname,
+                Lname = e.Lname,
+                Doj = e.Doj,
+                Age = e.Age,
+                Pan = e.Pan,
+                Salary = e.Salary,
+                Aadhar = e.Aadhar,
+                Department = e.Department,
 
+                Address = e.Address,
+
+                Skills = e.EmployeeSkillMappings.Select(a => new CheckModel
+                {
+                    Name = a.Skill.SkillName,
+                    Id = a.Skill.SkillId,
+                    Checked = true
+                }).ToList(),
+
+
+                Hobbies = e.EmployeeHobbiesMapings.Select(a => new CheckModel
+                {
+                    Name = a.Hobby.HobbyName,
+                    Id = a.Hobby.HobbiesId,
+                    Checked = true
+                }).ToList()
+            }).ToList();
+
+            return View(emp);
         }
+
         public ActionResult Edit(int Id)
         {
-            //var obj = new EmployeeModel();
-            // var stateList = dbObj.States.Select(s => new SelectListItem
-            //{
-            //    Text = s.StateName,
-            //    Value = s.StateId.ToString()
-            // }).ToList();
-            // var countryList = dbObj.Countries.Select(s => new SelectListItem
-            // {
-            //    Value = s.CountryId.ToString(),
-            //    Text = s.CountryName
-            //}).ToList();
-
-            var emp1 = dbObj.Employees.Where(x => x.Empid == Id).FirstOrDefault();
-
             var emp = dbObj.Employees.Where(x => x.Empid == Id).Select(
-                e => new EmployeeModel()
-                {
-                    Empid = e.Empid,
-                    Fname = e.Fname,
-                    Lname = e.Lname,
-                    Doj = e.Doj,
-                    Age = e.Age,
-                    Pan = e.Pan,
-                    Salary = e.Salary,
-                    Aadhar = e.Aadhar,
-                    AddressLine1 = e.Address.AddressLine1,
-                    AddressLine2 = e.Address.AddressLine2,
-                    ZipCode = e.Address.ZipCode,
-                    LandMark = e.Address.LandMark,
-                    CountryId = e.Address.CountryId,
-                    StateId = e.Address.StateId,
-                }).FirstOrDefault();
+            e => new EmployeeModel()
+            {
+                Empid = e.Empid,
+                Fname = e.Fname,
+                Lname = e.Lname,
+                Doj = e.Doj,
+                Age = e.Age,
+                Pan = e.Pan,
+                Salary = e.Salary,
+                Aadhar = e.Aadhar,
+                DepartmentID = e.DepartmentID,
+                AddressLine1 = e.Address.AddressLine1,
+                AddressLine2 = e.Address.AddressLine2,
+                ZipCode = e.Address.ZipCode,
+                LandMark = e.Address.LandMark,
+                CountryId = e.Address.CountryId,
+                StateId = e.Address.StateId
+
+            }).FirstOrDefault();
             var stateList = dbObj.States.Select(s => new SelectListItem
             {
                 Text = s.StateName,
@@ -152,29 +207,117 @@ namespace WebApp_complete.Controllers
                 Value = s.CountryId.ToString(),
                 Text = s.CountryName
             }).ToList();
+            var DepartmentList = dbObj.Departments.Select(s => new SelectListItem
+            {
+                Value = s.DepartmentID.ToString(),
+                Text = s.DepartmentName
+            }).ToList();
+
+            #region Skills logic
+            var masterSkills = dbObj.Skills.Select(s => new CheckModel
+            {
+                Id = s.SkillId,
+                Name = s.SkillName
+            }).ToList();
+
+            var empSkillIds = dbObj.EmployeeSkillMappings.Where(a => a.EmployeeId == Id).Select(a => a.SkillID).ToList();
+
+            masterSkills.ForEach(skill =>
+             {
+                 if (empSkillIds.Contains(skill.Id))
+                 {
+                     skill.Checked = true;
+                 }
+             });
+
+            #endregion
+
+            #region Hobbies logic
+            var masterhobbies = dbObj.Hobbies.Select(s => new CheckModel
+            {
+                Id = s.HobbiesId,
+                Name = s.HobbyName
+            }).ToList();
+            var hobbyIds = dbObj.EmployeeHobbiesMapings.Where(a => a.EmployeeId == Id).Select(a => a.HobbiesId).ToList();
+            masterhobbies.ForEach(Hobby =>
+            {
+                if (hobbyIds.Contains(Hobby.Id))
+                {
+                    Hobby.Checked = true;
+                }
+            });
+            #endregion
 
             emp.Countries = countryList;
             emp.States = stateList;
+            emp.Departments = DepartmentList;
+            emp.Skills = masterSkills;
+            emp.Hobbies = masterhobbies;
             return View(emp);
         }
 
-        /*///this is not working//
-        public ActionResult Update(EMP_TABLE emp)
-        {
-            var Fname = emp.Fname; 
-            var Lname = emp.Lname;
-            var Age = emp.Age;
-            var Doj = emp.Doj;
-            var Pan = emp.Pan;
-            var Aadhar = emp.Aadhar;
-            var Salary = emp.Salary;    
-            return RedirectToAction("Edit");
-
-        }*/
         [HttpPost]
         public ActionResult Edit(EmployeeModel model)
         {
+
             var empl = dbObj.Employees.Where(s => s.Empid == model.Empid).FirstOrDefault();
+
+
+            #region Skills Mapping Logic
+
+            var skillsMappings = empl.EmployeeSkillMappings;
+            if (skillsMappings != null && skillsMappings.Count > 0)
+            {
+                dbObj.EmployeeSkillMappings.RemoveRange(skillsMappings);
+            }
+
+            if (model.Skills != null && model.Skills.Count > 0)
+            {
+                var selectedSkills = model.Skills.Where(a => a.Checked == true).ToList();
+                if (selectedSkills != null && selectedSkills.Count > 0)
+                {
+                    var employeeSkillMappings = new List<EmployeeSkillMapping>();
+                    foreach (var abc in selectedSkills)
+                    {
+                        var empSkill = new EmployeeSkillMapping();
+                        empSkill.SkillID = abc.Id;
+                        empSkill.EmployeeId = model.Empid;
+                        employeeSkillMappings.Add(empSkill);
+                    }
+                    dbObj.EmployeeSkillMappings.AddRange(employeeSkillMappings);
+                }
+            }
+
+            # endregion 
+
+            var hobby = dbObj.Employees.Where(s => s.Empid == model.Empid).FirstOrDefault();
+
+
+
+            #region Hobbies Mapping Logic
+            var hobbyMappings = hobby.EmployeeHobbiesMapings;
+            if (hobbyMappings != null && hobbyMappings.Count > 0)
+            {
+                dbObj.EmployeeHobbiesMapings.RemoveRange(hobbyMappings);
+            }
+            if (model.Hobbies != null && model.Hobbies.Count > 0)
+            {
+                var selectedHobbies = model.Hobbies.Where(a => a.Checked == true).ToList();
+                if (selectedHobbies != null && selectedHobbies.Count > 0)
+                {
+                    var EmployeeHobbiesMapings = new List<EmployeeHobbiesMaping>();
+                    foreach (var item in selectedHobbies)
+                    {
+                        var emphobby = new EmployeeHobbiesMaping();
+                        emphobby.HobbiesId = item.Id;
+                        emphobby.EmployeeId = model.Empid;
+                        EmployeeHobbiesMapings.Add(emphobby);
+                    }
+                    dbObj.EmployeeHobbiesMapings.AddRange(EmployeeHobbiesMapings);
+                }
+            }
+            #endregion
+
             empl.Fname = model.Fname;
             empl.Lname = model.Lname;
             empl.Doj = model.Doj;
@@ -183,7 +326,9 @@ namespace WebApp_complete.Controllers
             empl.Salary = model.Salary;
             empl.Aadhar = model.Aadhar;
 
-            empl.Address = new Address();
+            empl.DepartmentID = model.DepartmentID;
+            empl.ModifiedDateTime = DateTime.Now;
+
             empl.Address.AddressLine1 = model.AddressLine1;
             empl.Address.AddressLine2 = model.AddressLine2;
             empl.Address.ZipCode = model.ZipCode;
@@ -191,30 +336,73 @@ namespace WebApp_complete.Controllers
             empl.Address.CountryId = model.CountryId;
             empl.Address.StateId = model.StateId;
             dbObj.SaveChanges();
-            //dbObj.Remove(empl);
-            //dbObj.Add(Id);
-            //dbObj.Entry<EMP_TABLE>()..Sta
+
             return RedirectToAction("List");
         }
+
         public ActionResult Delete(int id)
         {
+            var mapping = dbObj.EmployeeSkillMappings.Where(x => x.EmployeeId == id).ToList();
+
+            dbObj.EmployeeSkillMappings.RemoveRange(mapping);
+            var mappingHobby = dbObj.EmployeeHobbiesMapings.Where(x => x.EmployeeId == id).ToList();
+
+            dbObj.EmployeeHobbiesMapings.RemoveRange(mappingHobby);
+
             var res = dbObj.Employees.Where(x => x.Empid == id).First();
             dbObj.Employees.Remove(res);
             dbObj.SaveChanges();
             var list = dbObj.Employees.ToList();
-            return View("List", list);
+            return RedirectToAction("List");
         }
 
         public ActionResult Details(int empId)
         {
-            var emp = dbObj.Employees.FirstOrDefault(x => x.Empid == empId);
+
+            var emp = dbObj.Employees.Where(x => x.Empid == empId).Select(
+            e => new EmployeeModel()
+            {
+                Empid = e.Empid,
+                Fname = e.Fname,
+                Lname = e.Lname,
+                Doj = e.Doj,
+                Age = e.Age,
+                Pan = e.Pan,
+                Salary = e.Salary,
+                Aadhar = e.Aadhar,
+                Department = e.Department,
+                Address = e.Address,
+                AddressLine1 = e.Address.AddressLine1,
+                AddressLine2 = e.Address.AddressLine2,
+                ZipCode = e.Address.ZipCode,
+                LandMark = e.Address.LandMark,
+                CountryId = e.Address.CountryId,
+                StateId = e.Address.StateId,
+
+                Skills = e.EmployeeSkillMappings.Select(a => new CheckModel
+                {
+                    Name = a.Skill.SkillName,
+                    Id = a.Skill.SkillId,
+                    Checked = true
+                }).ToList(),
+                Hobbies = e.EmployeeHobbiesMapings.Select(a => new CheckModel
+                {
+                    Name = a.Hobby.HobbyName,
+                    Id = a.Hobby.HobbiesId,
+                    Checked = true
+                }).ToList()
+
+
+            }).FirstOrDefault();
             return View(emp);
         }
+
         public ActionResult Welcome()
         {
             ViewBag.wel = "wel-come to our website";
             return View();
         }
+
         public ActionResult Sorting(string searching)
         {
             searching = searching != null ? searching.ToLower() : string.Empty;
@@ -222,152 +410,7 @@ namespace WebApp_complete.Controllers
 
 
 
-            /* if (searchby == "fname") //this is not working //
-            {
-                var data = dbObj.EMP_TABLE.Where(model => model.Fname.StartsWith(search) || search == null).ToList();
-                return View(data);
-            }     
-            else if (searchby == "Lname")
-            {
-                var data = dbObj.EMP_TABLE.Where(model => model.Lname == search || search == null).ToList();
-                return View(data);
-            }
-            else
-            {
-                var data = dbObj.EMP_TABLE.ToList();
-                return View(data);
-            }*/
 
         }
-        /* public ActionResult CreateState(State obj)
-         {
-             return View();
-         }
-         public void StateCreate(State model)
-         {
-             State obj = new State();
-
-
-                 obj.StateId = model.StateId;
-                 obj.StateName = model.StateName;
-                 obj.StateCode = model.StateCode;
-
-
-                     dbObj.SaveChanges();
-
-
-
-             RedirectToAction("StateList");
-         }*/
-
-        public ActionResult StateList()
-        {
-            var state = dbObj.States.ToList();
-            return View(state);
-
-        }
-        public ActionResult UpdateState(int Id)
-        {
-
-            var state = dbObj.States.Where(x => x.StateId == Id).FirstOrDefault();
-
-            return View(state);
-        }
-        [HttpPost]
-        public ActionResult UpdateState(State model)
-        {
-            var state = dbObj.States.Where(s => s.StateId == model.StateId).FirstOrDefault();
-            state.StateName = model.StateName;
-            state.StateCode = model.StateCode;
-
-            dbObj.SaveChanges();
-
-            return RedirectToAction("StateList");
-
-        }
-        public ActionResult DeleteState(int id)
-        {
-            var sta = dbObj.States.Where(x => x.StateId == id).First();
-            dbObj.States.Remove(sta);
-            dbObj.SaveChanges();
-            var list = dbObj.States.ToList();
-            return View("StateList", list);
-        }
-        public ActionResult CountryList()
-        {
-            var Country = dbObj.Countries.ToList();
-            return View(Country);
-        }
-        public ActionResult UpdateCountry(int Id)
-        {
-
-            var state = dbObj.Countries.Where(x => x.CountryId == Id).FirstOrDefault();
-
-            return View(state);
-        }
-        [HttpPost]
-        public ActionResult UpdateCountry(Country model)
-        {
-            var state = dbObj.Countries.Where(s => s.CountryId == model.CountryId).FirstOrDefault();
-            state.CountryName = model.CountryName;
-            state.CountryCode = model.CountryCode;
-
-            dbObj.SaveChanges();
-
-            return RedirectToAction("CountryList");
-
-        }
-        public ActionResult DeleteCountry(int id)
-        {
-            var country = dbObj.Countries.Where(x => x.CountryId == id).First();
-            dbObj.Countries.Remove(country);
-            dbObj.SaveChanges();
-            var list = dbObj.Countries.ToList();
-            return View("CountryList", list);
-        }
-        public ActionResult SortingState(string searching)
-        {
-            searching = searching != null ? searching.ToLower() : string.Empty;
-            return View(dbObj.States.Where(x => x.StateName.ToLower().Contains(searching) || x.StateCode.ToLower().Contains(searching)).ToList());
-        }
-
-
-
-
-        public ActionResult SortingCountry(string searching)
-        {
-
-            searching = searching != null ? searching.ToLower() : string.Empty;
-            return View(dbObj.Countries.Where(x => x.CountryName.ToLower().Contains(searching) || x.CountryCode.ToLower().Contains(searching)).ToList());
-
-        }
-        public ActionResult DropDownCountry(int? defaultCountryId = 1)
-        {
-            Employee model = new Employee();
-
-            var CountryList = dbObj.Countries.ToList();
-            var allStatelist = dbObj.States.Where(m => m.CountryId == defaultCountryId).ToList();
-            var defaultStateId = allStatelist.Select(m => m.StateId).FirstOrDefault();
-
-
-            //model.Countries = new SelectList(CountryList, "CountryId", "CountryName", defaultCountryId);
-            //model.States = new SelectList(allStatelist, "StateId", "StateName", defaultStateId);
-
-
-            return View(model);
-        }
-        /* public ActionResult DropDownState()
-         {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-
-
-             var StateList = dbObj.States.ToList();
-
-             ViewBag.StateName = new SelectList(StateList, "StateId", "StateName","StateCode");
-
-             return View();
-         }*/
-
-
     }
 }
-

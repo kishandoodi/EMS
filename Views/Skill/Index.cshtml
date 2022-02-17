@@ -1,0 +1,33 @@
+﻿@model List<WebApp_complete.Models.SkillModel>
+
+@Html.ActionLink("Create New", "Create")
+
+<table class="table">
+    <tr>
+        <th>Skill Name</th>
+        <th>Created On</th>
+        <th>Last Modified On</th>
+        <th>Action</th>
+    </tr>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.SkillName
+                </td>
+                <td>
+                    @item.CreatedOn
+                </td>
+                <td>
+                    @item.ModifiedOn
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Id }) " class="btn btn-success btn-action">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger btn-action">delete</a>
+                    <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-primary btn-action">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

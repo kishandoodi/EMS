@@ -27,6 +27,8 @@ namespace WebApp_complete.EMP
         public string LandMark { get; set; }
         public int StateId { get; set; }
         public int CountryId { get; set; }
+        public Nullable<System.DateTime> ModifiedDateTime { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
     
         public virtual Country Country { get; set; }
         public virtual State State { get; set; }
