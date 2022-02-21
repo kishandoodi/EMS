@@ -19,6 +19,7 @@ namespace WebApp_complete.EMP
         {
             this.EmployeeHobbiesMapings = new HashSet<EmployeeHobbiesMaping>();
             this.EmployeeSkillMappings = new HashSet<EmployeeSkillMapping>();
+            this.Images = new HashSet<Image>();
         }
     
         public int Empid { get; set; }
@@ -42,5 +43,7 @@ namespace WebApp_complete.EMP
         public virtual ICollection<EmployeeHobbiesMaping> EmployeeHobbiesMapings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeSkillMapping> EmployeeSkillMappings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Image> Images { get; set; }
     }
 }

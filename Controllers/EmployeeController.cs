@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using WebApp_complete.EMP;
 using WebApp_complete.Models;
@@ -9,9 +11,11 @@ using WebApp_complete.Models;
 namespace WebApp_complete.Controllers
 {
     [Authorize]
-    public class EMPController : Controller
+    public class EmployeeController : Controller
     {
         readonly EMSEntities dbObj = new EMSEntities();
+
+        
 
         public ActionResult Create()
         {
@@ -60,7 +64,7 @@ namespace WebApp_complete.Controllers
         }
         [HttpPost]
 
-        public ActionResult Create(EmployeeModel model)
+        public ActionResult Create(EmployeeModel model, HttpPostedFileBase File)
         {
             Employee obj = new Employee();
             if (ModelState.IsValid)
@@ -74,7 +78,6 @@ namespace WebApp_complete.Controllers
                 obj.Aadhar = model.Aadhar;
                 obj.Salary = model.Salary;
                 obj.CreatedDateTime = DateTime.Now;
-
                 obj.DepartmentID = model.DepartmentID;
 
                 obj.Address = new Address();
@@ -86,24 +89,57 @@ namespace WebApp_complete.Controllers
                 obj.Address.StateId = model.StateId;
                 obj.Address.CountryId = model.CountryId;
                 obj.Address.CreatedDateTime = DateTime.Now;
-                if (model.Skills != null && model.Skills.Count > 0)
+
+                #region Image Logic
+
+                Image obj1 = new Image();
+                var allowedExtensions = new[] {
+                     ".Jpg", ".png", ".jpg", "jpeg"
+                };
+                obj1.ImageId = model.Image.ImageId;
+                obj1.ImagePath = model.Image.ImagePath;
+                obj1.Empid = obj.Empid;
+                obj1.Title = model.Image.Title;
+                var fileName = Path.GetFileName(File.FileName);
+                var ext = Path.GetExtension(File.FileName);
+
+                if (allowedExtensions.Contains(ext))
                 {
-                    var selectedSkills = model.Skills.Where(a => a.Checked == true).ToList();
-                    if (selectedSkills != null && selectedSkills.Count > 0)
-                    {
-                        var employeeSkillMappings = new List<EmployeeSkillMapping>();
-                        foreach (var abc in selectedSkills)
-                        {
-                            var empSkill = new EmployeeSkillMapping();
-                            empSkill.SkillID = abc.Id;
-                            empSkill.EmployeeId = obj.Empid;
-                            employeeSkillMappings.Add(empSkill);
-                        }
-                        obj.EmployeeSkillMappings = employeeSkillMappings;
-                    }
+                    string name = Path.GetFileNameWithoutExtension(fileName);
+                    string myfile = name + "_" + obj1.ImageId + ext;
+                    var path = Path.Combine(Server.MapPath("~/Image"), myfile);
+                    obj1.ImagePath = path;
+                    dbObj.Images.Add(obj1);
+
+                    File.SaveAs(path);
+
                 }
+                else
+                {
+                    ViewBag.message = "Please choose only Image file";
+                }
+                #endregion
 
+                #region Skill Logic
+                if (model.Skills != null && model.Skills.Count > 0)
+                    {
+                        var selectedSkills = model.Skills.Where(a => a.Checked == true).ToList();
+                        if (selectedSkills != null && selectedSkills.Count > 0)
+                        {
+                            var employeeSkillMappings = new List<EmployeeSkillMapping>();
+                            foreach (var abc in selectedSkills)
+                            {
+                                var empSkill = new EmployeeSkillMapping();
+                                empSkill.SkillID = abc.Id;
+                                empSkill.EmployeeId = obj.Empid;
+                                employeeSkillMappings.Add(empSkill);
+                            }
+                            obj.EmployeeSkillMappings = employeeSkillMappings;
+                        }
+                    }
+                #endregion
 
+                #region Hobbies Logic
                 if (model.Hobbies != null && model.Hobbies.Count > 0)
                 {
                     var selectedHobbies = model.Hobbies.Where(a => a.Checked == true).ToList();
@@ -121,7 +157,7 @@ namespace WebApp_complete.Controllers
                     }
                 }
 
-
+                #endregion
                 if (model.Empid == 0)
                 {
                     dbObj.Employees.Add(obj); // To Insert record
@@ -153,7 +189,6 @@ namespace WebApp_complete.Controllers
                 Salary = e.Salary,
                 Aadhar = e.Aadhar,
                 Department = e.Department,
-
                 Address = e.Address,
 
                 Skills = e.EmployeeSkillMappings.Select(a => new CheckModel
@@ -169,10 +204,21 @@ namespace WebApp_complete.Controllers
                     Name = a.Hobby.HobbyName,
                     Id = a.Hobby.HobbiesId,
                     Checked = true
-                }).ToList()
+                }).ToList(),
+
+
+                //Image = e.Images.Select(a => new Image
+                //{
+                //    ImageId = a.ImageId,
+                //    Title = a.Title,
+                //    ImagePath = a.ImagePath
+                //}).FirstOrDefault()
+
+
             }).ToList();
 
-            return View(emp);
+
+         return View(emp);
         }
 
         public ActionResult Edit(int Id)
@@ -254,7 +300,7 @@ namespace WebApp_complete.Controllers
             emp.Skills = masterSkills;
             emp.Hobbies = masterhobbies;
             return View(emp);
-        }
+        }   
 
         [HttpPost]
         public ActionResult Edit(EmployeeModel model)
@@ -348,6 +394,10 @@ namespace WebApp_complete.Controllers
             var mappingHobby = dbObj.EmployeeHobbiesMapings.Where(x => x.EmployeeId == id).ToList();
 
             dbObj.EmployeeHobbiesMapings.RemoveRange(mappingHobby);
+
+            var Img  = dbObj.Images.Where(x => x.Empid == id).First();
+
+            dbObj.Images.Remove(Img);
 
             var res = dbObj.Employees.Where(x => x.Empid == id).First();
             dbObj.Employees.Remove(res);

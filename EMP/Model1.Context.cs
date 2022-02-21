@@ -32,6 +32,7 @@ namespace WebApp_complete.EMP
         public virtual DbSet<EmployeeHobbiesMaping> EmployeeHobbiesMapings { get; set; }
         public virtual DbSet<EmployeeSkillMapping> EmployeeSkillMappings { get; set; }
         public virtual DbSet<Hobby> Hobbies { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Nominee> Nominees { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<State> States { get; set; }

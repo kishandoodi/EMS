@@ -81,6 +81,15 @@
           <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
           <Property Name="ModifiedDateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="250" />
+          <Property Name="ImagePath" Type="varchar(max)" />
+          <Property Name="Empid" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nominee">
           <Key>
             <PropertyRef Name="NomineeId" />
@@ -231,6 +240,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Image__Empid__503BEA1C">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Empid" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="Empid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__State__CountryId__1CBC4616">
           <End Role="Country" Type="Self.Country" Multiplicity="1" />
           <End Role="State" Type="Self.State" Multiplicity="*" />
@@ -251,6 +272,7 @@
           <EntitySet Name="EmployeeHobbiesMaping" EntityType="Self.EmployeeHobbiesMaping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeSkillMapping" EntityType="Self.EmployeeSkillMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hobbies" EntityType="Self.Hobbies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nominee" EntityType="Self.Nominee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
@@ -291,6 +313,10 @@
             <End Role="Skill" EntitySet="Skill" />
             <End Role="EmployeeSkillMapping" EntitySet="EmployeeSkillMapping" />
           </AssociationSet>
+          <AssociationSet Name="FK__Image__Empid__503BEA1C" Association="Self.FK__Image__Empid__503BEA1C">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
           <AssociationSet Name="FK__State__CountryId__1CBC4616" Association="Self.FK__State__CountryId__1CBC4616">
             <End Role="Country" EntitySet="Country" />
             <End Role="State" EntitySet="State" />
@@ -308,6 +334,7 @@
           <EntitySet Name="EmployeeHobbiesMapings" EntityType="EMSModel.EmployeeHobbiesMaping" />
           <EntitySet Name="EmployeeSkillMappings" EntityType="EMSModel.EmployeeSkillMapping" />
           <EntitySet Name="Hobbies" EntityType="EMSModel.Hobby" />
+          <EntitySet Name="Images" EntityType="EMSModel.Image" />
           <EntitySet Name="Nominees" EntityType="EMSModel.Nominee" />
           <EntitySet Name="Skills" EntityType="EMSModel.Skill" />
           <EntitySet Name="States" EntityType="EMSModel.State" />
@@ -343,6 +370,10 @@
           <AssociationSet Name="FK__EmployeeS__Emplo__40F9A68C" Association="EMSModel.FK__EmployeeS__Emplo__40F9A68C">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmployeeSkillMapping" EntitySet="EmployeeSkillMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Image__Empid__503BEA1C" Association="EMSModel.FK__Image__Empid__503BEA1C">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Image" EntitySet="Images" />
           </AssociationSet>
           <AssociationSet Name="FK__EmployeeH__Hobbi__43D61337" Association="EMSModel.FK__EmployeeH__Hobbi__43D61337">
             <End Role="Hobby" EntitySet="Hobbies" />
@@ -414,6 +445,7 @@
           <NavigationProperty Name="User" Relationship="EMSModel.FK__Employee__UserId__2B0A656D" FromRole="Employee" ToRole="User" />
           <NavigationProperty Name="EmployeeHobbiesMapings" Relationship="EMSModel.FK__EmployeeH__Emplo__42E1EEFE" FromRole="Employee" ToRole="EmployeeHobbiesMaping" />
           <NavigationProperty Name="EmployeeSkillMappings" Relationship="EMSModel.FK__EmployeeS__Emplo__40F9A68C" FromRole="Employee" ToRole="EmployeeSkillMapping" />
+          <NavigationProperty Name="Images" Relationship="EMSModel.FK__Image__Empid__503BEA1C" FromRole="Employee" ToRole="Image" />
         </EntityType>
         <EntityType Name="EmployeeHobbiesMaping">
           <Key>
@@ -444,6 +476,16 @@
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EmployeeHobbiesMapings" Relationship="EMSModel.FK__EmployeeH__Hobbi__43D61337" FromRole="Hobby" ToRole="EmployeeHobbiesMaping" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Empid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="EMSModel.FK__Image__Empid__503BEA1C" FromRole="Image" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Nominee">
           <Key>
@@ -587,6 +629,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Image__Empid__503BEA1C">
+          <End Type="EMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EMSModel.Image" Role="Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Empid" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="Empid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__EmployeeH__Hobbi__43D61337">
           <End Type="EMSModel.Hobby" Role="Hobby" Multiplicity="1" />
           <End Type="EMSModel.EmployeeHobbiesMaping" Role="EmployeeHobbiesMaping" Multiplicity="*" />
@@ -611,7 +665,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -697,6 +751,16 @@
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="HobbyName" ColumnName="HobbyName" />
                 <ScalarProperty Name="HobbiesId" ColumnName="HobbiesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="EMSModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="Empid" ColumnName="Empid" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
