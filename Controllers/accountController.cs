@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApp_complete.EMP;
+using WebApp_complete.Data;
 using System.Web.Security;
 
 namespace WebApp_complete.Controllers
@@ -24,7 +24,7 @@ namespace WebApp_complete.Controllers
                 if (isValid)
                 {
                     FormsAuthentication.SetAuthCookie(model.username, false);   
-                    return RedirectToAction("Welcome", "EMP");
+                    return RedirectToAction("Welcome", "Employee");
                 }
                 ModelState.AddModelError("", "invalid user name and password");
             }
