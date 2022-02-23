@@ -7,26 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp_complete.EMP
+namespace WebApp_complete.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Department
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Department()
         {
             this.Employees = new HashSet<Employee>();
         }
     
-        public int id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public System.DateTime CreatedDateTime { get; set; }
+        public int DepartmentID { get; set; }
+        public string DepartmentName { get; set; }
         public Nullable<System.DateTime> ModifiedDateTime { get; set; }
-        public Nullable<int> RoleId { get; set; }
-        public Nullable<short> StatusId { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }

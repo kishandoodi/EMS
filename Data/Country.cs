@@ -7,25 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp_complete.EMP
+namespace WebApp_complete.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Skill
+    public partial class Country
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Skill()
+        public Country()
         {
-            this.EmployeeSkillMappings = new HashSet<EmployeeSkillMapping>();
+            this.Addresses = new HashSet<Address>();
+            this.States = new HashSet<State>();
         }
     
-        public int SkillId { get; set; }
-        public string SkillName { get; set; }
+        public int CountryId { get; set; }
+        public string CountryName { get; set; }
+        public string CountryCode { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<System.DateTime> ModifiedDateTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeeSkillMapping> EmployeeSkillMappings { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<State> States { get; set; }
     }
 }

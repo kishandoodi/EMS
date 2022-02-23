@@ -7,32 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp_complete.EMP
+namespace WebApp_complete.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Address
+    public partial class Hobby
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Address()
+        public Hobby()
         {
-            this.Employees = new HashSet<Employee>();
+            this.EmployeeHobbiesMapings = new HashSet<EmployeeHobbiesMaping>();
         }
     
-        public int AddressId { get; set; }
-        public string AddressLine1 { get; set; }
-        public string AddressLine2 { get; set; }
-        public string ZipCode { get; set; }
-        public string LandMark { get; set; }
-        public int StateId { get; set; }
-        public int CountryId { get; set; }
-        public Nullable<System.DateTime> ModifiedDateTime { get; set; }
+        public int HobbiesId { get; set; }
+        public string HobbyName { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
+        public Nullable<System.DateTime> ModifiedDateTime { get; set; }
     
-        public virtual Country Country { get; set; }
-        public virtual State State { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<EmployeeHobbiesMaping> EmployeeHobbiesMapings { get; set; }
     }
 }

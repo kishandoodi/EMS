@@ -7,18 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp_complete.EMP
+namespace WebApp_complete.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class EmployeeHobbiesMaping
+    public partial class MediaFile
     {
-        public int EmployeeHobbiesMapingId { get; set; }
-        public int EmployeeId { get; set; }
-        public int HobbiesId { get; set; }
+        public int ImageId { get; set; }
+        public string Title { get; set; }
+        public string ImagePath { get; set; }
+        public int Empid { get; set; }
+        public System.DateTime CreatedDateTime { get; set; }
+        public short StatusId { get; set; }
     
         public virtual Employee Employee { get; set; }
-        public virtual Hobby Hobby { get; set; }
     }
 }

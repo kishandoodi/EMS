@@ -135,51 +135,53 @@
     <Compile Include="Controllers\HobbiesController.cs" />
     <Compile Include="Controllers\SkillController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
-    <Compile Include="EMP\Address.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\Address.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\Country.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\Country.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\Department.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\Department.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\Employee.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\Employee.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\EmployeeHobbiesMaping.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\EmployeeHobbiesMaping.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\EmployeeSkillMapping.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\EmployeeSkillMapping.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\Hobby.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EMP\Image.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EMP\Model1.Context.cs">
+    <Compile Include="Data\EmsData.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
+      <DependentUpon>EmsData.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\Model.Designer.cs">
+    <Compile Include="Data\EmsData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Model.edmx</DependentUpon>
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\Nominee.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\EmsData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmsData.edmx</DependentUpon>
     </Compile>
-    <Compile Include="EMP\Skill.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\Hobby.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\State.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\MediaFile.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
-    <Compile Include="EMP\User.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Data\Skill.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\State.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\User.cs">
+      <DependentUpon>EmsData.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -199,15 +201,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="EMP\Model1.Context.tt">
+    <Content Include="Data\EmsData.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>EmsData.edmx</DependentUpon>
+      <LastGenOutput>EmsData.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="EMP\Model1.tt">
+    <Content Include="Data\EmsData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>EmsData.edmx</DependentUpon>
+      <LastGenOutput>EmsData.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -216,12 +218,12 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include=".editorconfig" />
-    <EntityDeploy Include="EMP\Model.edmx">
+    <EntityDeploy Include="Data\EmsData.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>EmsData.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="EMP\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
+    <Content Include="Data\EmsData.edmx.diagram">
+      <DependentUpon>EmsData.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -281,7 +283,7 @@
     <Content Include="Views\Countries\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Image\" />
+    <Folder Include="Media\Emp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

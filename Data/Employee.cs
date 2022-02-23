@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp_complete.EMP
+namespace WebApp_complete.Data
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace WebApp_complete.EMP
         {
             this.EmployeeHobbiesMapings = new HashSet<EmployeeHobbiesMaping>();
             this.EmployeeSkillMappings = new HashSet<EmployeeSkillMapping>();
-            this.Images = new HashSet<Image>();
+            this.MediaFiles = new HashSet<MediaFile>();
         }
     
         public int Empid { get; set; }
@@ -44,6 +44,6 @@ namespace WebApp_complete.EMP
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeSkillMapping> EmployeeSkillMappings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<MediaFile> MediaFiles { get; set; }
     }
 }

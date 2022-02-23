@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp_complete.EMP
+namespace WebApp_complete.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class State
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public State()
+        public User()
         {
-            this.Addresses = new HashSet<Address>();
+            this.Employees = new HashSet<Employee>();
         }
     
-        public int StateId { get; set; }
-        public string StateName { get; set; }
-        public string StateCode { get; set; }
-        public int CountryId { get; set; }
+        public int id { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<System.DateTime> ModifiedDateTime { get; set; }
+        public Nullable<int> RoleId { get; set; }
+        public Nullable<short> StatusId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
-        public virtual Country Country { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

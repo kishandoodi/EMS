@@ -7,24 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp_complete.EMP
+namespace WebApp_complete.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Department
+    public partial class Address
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Department()
+        public Address()
         {
             this.Employees = new HashSet<Employee>();
         }
     
-        public int DepartmentID { get; set; }
-        public string DepartmentName { get; set; }
+        public int AddressId { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string ZipCode { get; set; }
+        public string LandMark { get; set; }
+        public int StateId { get; set; }
+        public int CountryId { get; set; }
         public Nullable<System.DateTime> ModifiedDateTime { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
     
+        public virtual Country Country { get; set; }
+        public virtual State State { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
     }

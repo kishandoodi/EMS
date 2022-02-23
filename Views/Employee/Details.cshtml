@@ -11,6 +11,20 @@
     
     <dl class="dl-horizontal">
         <dt>
+            Profile Name:
+        </dt>
+
+        <dd>
+
+            @if (Model.MediaFiles != null)
+            {
+                <img src="~/@Model.MediaFiles.ImagePath"
+                     class="rounded-circle"
+                     height="80" width="80" />
+
+            }
+        </dd>
+        <dt>
             Fname:
         </dt>
 
@@ -19,9 +33,9 @@
         </dd>
 
         <dt>
-           Lname:
+            Lname:
         </dt>
-        
+
         <dd>
             @Html.DisplayFor(model => model.Lname)
         </dd>
@@ -59,7 +73,7 @@
         </dd>
 
         <dt>
-           Salary:
+            Salary:
         </dt>
 
         <dd>
@@ -118,8 +132,8 @@
                 @foreach (var skill in Model.Skills)
                 {
                     <div class="tag border-area">
-                    @skill.Name
-                   </div>
+                        @skill.Name
+                    </div>
                 }
 
             </div>
@@ -134,12 +148,12 @@
                 {
                     <div class="tag border-area">
                         @Hobby.Name
-                        </div>
+                    </div>
                 }
 
-                    </div>
+            </div>
 
-</dd>
+        </dd>
     </dl>
 </div>
 <p>

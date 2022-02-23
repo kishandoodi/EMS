@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp_complete.EMP
+namespace WebApp_complete.Data
 {
     using System;
     using System.Data.Entity;
@@ -32,8 +32,7 @@ namespace WebApp_complete.EMP
         public virtual DbSet<EmployeeHobbiesMaping> EmployeeHobbiesMapings { get; set; }
         public virtual DbSet<EmployeeSkillMapping> EmployeeSkillMappings { get; set; }
         public virtual DbSet<Hobby> Hobbies { get; set; }
-        public virtual DbSet<Image> Images { get; set; }
-        public virtual DbSet<Nominee> Nominees { get; set; }
+        public virtual DbSet<MediaFile> MediaFiles { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<User> Users { get; set; }

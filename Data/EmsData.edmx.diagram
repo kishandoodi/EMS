@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f88fcb47f83349b8a991f7cb05089676" Name="Diagram1">
+        <EntityTypeShape EntityType="EMSModel.Address" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.Country" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.Department" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.Employee" Width="1.5" PointX="7.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.EmployeeHobbiesMaping" Width="1.5" PointX="9.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.EmployeeSkillMapping" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.Hobby" Width="1.5" PointX="7.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.MediaFile" Width="1.5" PointX="9.75" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.Skill" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.State" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMSModel.User" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <AssociationConnector Association="EMSModel.FK__Address__Country__208CD6FA" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__Address__StateId__1F98B2C1" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__Employee__Addres__2180FB33" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__State__CountryId__1CBC4616" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__Employee__Depart__29221CFB" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__Employee__UserId__2B0A656D" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__EmployeeH__Emplo__42E1EEFE" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__EmployeeS__Emplo__40F9A68C" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__Image__Empid__503BEA1C" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__EmployeeH__Hobbi__43D61337" ManuallyRouted="false" />
+        <AssociationConnector Association="EMSModel.FK__EmployeeS__Skill__41EDCAC5" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

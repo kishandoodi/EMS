@@ -7,17 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp_complete.EMP
+namespace WebApp_complete.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Nominee
+    public partial class EmployeeHobbiesMaping
     {
-        public int NomineeId { get; set; }
-        public string NomineeName { get; set; }
-        public Nullable<int> Share_ { get; set; }
-        public Nullable<System.DateTime> NomineeDob { get; set; }
-        public string NomineeRelation { get; set; }
+        public int EmployeeHobbiesMapingId { get; set; }
+        public int EmployeeId { get; set; }
+        public int HobbiesId { get; set; }
+    
+        public virtual Employee Employee { get; set; }
+        public virtual Hobby Hobby { get; set; }
     }
 }

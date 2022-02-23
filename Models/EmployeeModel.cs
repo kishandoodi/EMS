@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApp_complete.EMP;
+using WebApp_complete.Data;
 
 namespace WebApp_complete.Models
 {
@@ -33,7 +33,7 @@ namespace WebApp_complete.Models
         public Address Address { get; set; }
         public Department Department { get; set; }
         public int DepartmentID { get; set; }
-        public virtual Image Image { get; set; }
+        public ImageModel MediaFiles { get; set; }
         public HttpPostedFileBase File { get; set; }
         public List<SelectListItem> States { get; set; }
         public List<SelectListItem> Countries { get; set; }

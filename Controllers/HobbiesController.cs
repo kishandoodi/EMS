@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApp_complete.EMP;
+using WebApp_complete.Data;
 using WebApp_complete.Models;
 
 namespace WebApp_complete.Controllers
