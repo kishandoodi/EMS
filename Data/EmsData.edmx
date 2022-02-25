@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressId" />
@@ -86,8 +86,8 @@
             <PropertyRef Name="ImageId" />
           </Key>
           <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="250" />
-          <Property Name="ImagePath" Type="varchar(max)" />
+          <Property Name="FileName" Type="varchar" MaxLength="250" />
+          <Property Name="FilePath" Type="varchar(max)" />
           <Property Name="Empid" Type="int" Nullable="false" />
           <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
@@ -313,17 +313,73 @@
             <End Role="State" EntitySet="State" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="EMSModel.Address" />
+          <EntitySet Name="Countries" EntityType="EMSModel.Country" />
+          <EntitySet Name="Departments" EntityType="EMSModel.Department" />
+          <EntitySet Name="Employees" EntityType="EMSModel.Employee" />
+          <EntitySet Name="EmployeeHobbiesMapings" EntityType="EMSModel.EmployeeHobbiesMaping" />
+          <EntitySet Name="EmployeeSkillMappings" EntityType="EMSModel.EmployeeSkillMapping" />
+          <EntitySet Name="Hobbies" EntityType="EMSModel.Hobby" />
+          <EntitySet Name="MediaFiles" EntityType="EMSModel.MediaFile" />
+          <EntitySet Name="Skills" EntityType="EMSModel.Skill" />
+          <EntitySet Name="States" EntityType="EMSModel.State" />
+          <EntitySet Name="Users" EntityType="EMSModel.User" />
+          <AssociationSet Name="FK__Address__Country__208CD6FA" Association="EMSModel.FK__Address__Country__208CD6FA">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Address__StateId__1F98B2C1" Association="EMSModel.FK__Address__StateId__1F98B2C1">
+            <End Role="State" EntitySet="States" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__Addres__2180FB33" Association="EMSModel.FK__Employee__Addres__2180FB33">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__State__CountryId__1CBC4616" Association="EMSModel.FK__State__CountryId__1CBC4616">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__Depart__29221CFB" Association="EMSModel.FK__Employee__Depart__29221CFB">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__UserId__2B0A656D" Association="EMSModel.FK__Employee__UserId__2B0A656D">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeH__Emplo__42E1EEFE" Association="EMSModel.FK__EmployeeH__Emplo__42E1EEFE">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeHobbiesMaping" EntitySet="EmployeeHobbiesMapings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeS__Emplo__40F9A68C" Association="EMSModel.FK__EmployeeS__Emplo__40F9A68C">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeSkillMapping" EntitySet="EmployeeSkillMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Image__Empid__503BEA1C" Association="EMSModel.FK__Image__Empid__503BEA1C">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="MediaFile" EntitySet="MediaFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeH__Hobbi__43D61337" Association="EMSModel.FK__EmployeeH__Hobbi__43D61337">
+            <End Role="Hobby" EntitySet="Hobbies" />
+            <End Role="EmployeeHobbiesMaping" EntitySet="EmployeeHobbiesMapings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeS__Skill__41EDCAC5" Association="EMSModel.FK__EmployeeS__Skill__41EDCAC5">
+            <End Role="Skill" EntitySet="Skills" />
+            <End Role="EmployeeSkillMapping" EntitySet="EmployeeSkillMappings" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressId" />
           </Key>
           <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddressLine1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="LandMark" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -331,9 +387,9 @@
           <Property Name="CountryId" Type="Int32" Nullable="false" />
           <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Country" Relationship="Self.FK__Address__Country__208CD6FA" FromRole="Address" ToRole="Country" />
-          <NavigationProperty Name="State" Relationship="Self.FK__Address__StateId__1F98B2C1" FromRole="Address" ToRole="State" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__Addres__2180FB33" FromRole="Address" ToRole="Employee" />
+          <NavigationProperty Name="Country" Relationship="EMSModel.FK__Address__Country__208CD6FA" FromRole="Address" ToRole="Country" />
+          <NavigationProperty Name="State" Relationship="EMSModel.FK__Address__StateId__1F98B2C1" FromRole="Address" ToRole="State" />
+          <NavigationProperty Name="Employees" Relationship="EMSModel.FK__Employee__Addres__2180FB33" FromRole="Address" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -344,18 +400,18 @@
           <Property Name="CountryCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__Country__208CD6FA" FromRole="Country" ToRole="Address" />
-          <NavigationProperty Name="States" Relationship="Self.FK__State__CountryId__1CBC4616" FromRole="Country" ToRole="State" />
+          <NavigationProperty Name="Addresses" Relationship="EMSModel.FK__Address__Country__208CD6FA" FromRole="Country" ToRole="Address" />
+          <NavigationProperty Name="States" Relationship="EMSModel.FK__State__CountryId__1CBC4616" FromRole="Country" ToRole="State" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
           </Key>
           <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DepartmentName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__Depart__29221CFB" FromRole="Department" ToRole="Employee" />
+          <NavigationProperty Name="Employees" Relationship="EMSModel.FK__Employee__Depart__29221CFB" FromRole="Department" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -374,12 +430,12 @@
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
           <Property Name="UserId" Type="Int32" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Employee__Addres__2180FB33" FromRole="Employee" ToRole="Address" />
-          <NavigationProperty Name="Department" Relationship="Self.FK__Employee__Depart__29221CFB" FromRole="Employee" ToRole="Department" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Employee__UserId__2B0A656D" FromRole="Employee" ToRole="User" />
-          <NavigationProperty Name="EmployeeHobbiesMapings" Relationship="Self.FK__EmployeeH__Emplo__42E1EEFE" FromRole="Employee" ToRole="EmployeeHobbiesMaping" />
-          <NavigationProperty Name="EmployeeSkillMappings" Relationship="Self.FK__EmployeeS__Emplo__40F9A68C" FromRole="Employee" ToRole="EmployeeSkillMapping" />
-          <NavigationProperty Name="MediaFiles" Relationship="Self.FK__Image__Empid__503BEA1C" FromRole="Employee" ToRole="MediaFile" />
+          <NavigationProperty Name="Address" Relationship="EMSModel.FK__Employee__Addres__2180FB33" FromRole="Employee" ToRole="Address" />
+          <NavigationProperty Name="Department" Relationship="EMSModel.FK__Employee__Depart__29221CFB" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="User" Relationship="EMSModel.FK__Employee__UserId__2B0A656D" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="EmployeeHobbiesMapings" Relationship="EMSModel.FK__EmployeeH__Emplo__42E1EEFE" FromRole="Employee" ToRole="EmployeeHobbiesMaping" />
+          <NavigationProperty Name="EmployeeSkillMappings" Relationship="EMSModel.FK__EmployeeS__Emplo__40F9A68C" FromRole="Employee" ToRole="EmployeeSkillMapping" />
+          <NavigationProperty Name="MediaFiles" Relationship="EMSModel.FK__Image__Empid__503BEA1C" FromRole="Employee" ToRole="MediaFile" />
         </EntityType>
         <EntityType Name="EmployeeHobbiesMaping">
           <Key>
@@ -388,8 +444,8 @@
           <Property Name="EmployeeHobbiesMapingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="HobbiesId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__EmployeeH__Emplo__42E1EEFE" FromRole="EmployeeHobbiesMaping" ToRole="Employee" />
-          <NavigationProperty Name="Hobby" Relationship="Self.FK__EmployeeH__Hobbi__43D61337" FromRole="EmployeeHobbiesMaping" ToRole="Hobbies" />
+          <NavigationProperty Name="Employee" Relationship="EMSModel.FK__EmployeeH__Emplo__42E1EEFE" FromRole="EmployeeHobbiesMaping" ToRole="Employee" />
+          <NavigationProperty Name="Hobby" Relationship="EMSModel.FK__EmployeeH__Hobbi__43D61337" FromRole="EmployeeHobbiesMaping" ToRole="Hobby" />
         </EntityType>
         <EntityType Name="EmployeeSkillMapping">
           <Key>
@@ -398,8 +454,8 @@
           <Property Name="EmployeeSkillMapingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="SkillID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__EmployeeS__Emplo__40F9A68C" FromRole="EmployeeSkillMapping" ToRole="Employee" />
-          <NavigationProperty Name="Skill" Relationship="Self.FK__EmployeeS__Skill__41EDCAC5" FromRole="EmployeeSkillMapping" ToRole="Skill" />
+          <NavigationProperty Name="Employee" Relationship="EMSModel.FK__EmployeeS__Emplo__40F9A68C" FromRole="EmployeeSkillMapping" ToRole="Employee" />
+          <NavigationProperty Name="Skill" Relationship="EMSModel.FK__EmployeeS__Skill__41EDCAC5" FromRole="EmployeeSkillMapping" ToRole="Skill" />
         </EntityType>
         <EntityType Name="Hobby">
           <Key>
@@ -409,19 +465,19 @@
           <Property Name="HobbyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EmployeeHobbiesMapings" Relationship="Self.FK__EmployeeH__Hobbi__43D61337" FromRole="Hobbies" ToRole="EmployeeHobbiesMaping" />
+          <NavigationProperty Name="EmployeeHobbiesMapings" Relationship="EMSModel.FK__EmployeeH__Hobbi__43D61337" FromRole="Hobby" ToRole="EmployeeHobbiesMaping" />
         </EntityType>
         <EntityType Name="MediaFile">
           <Key>
             <PropertyRef Name="ImageId" />
           </Key>
           <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Empid" Type="Int32" Nullable="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="StatusId" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK__Image__Empid__503BEA1C" FromRole="MediaFile" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="EMSModel.FK__Image__Empid__503BEA1C" FromRole="MediaFile" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Skill">
           <Key>
@@ -431,7 +487,7 @@
           <Property Name="SkillName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EmployeeSkillMappings" Relationship="Self.FK__EmployeeS__Skill__41EDCAC5" FromRole="Skill" ToRole="EmployeeSkillMapping" />
+          <NavigationProperty Name="EmployeeSkillMappings" Relationship="EMSModel.FK__EmployeeS__Skill__41EDCAC5" FromRole="Skill" ToRole="EmployeeSkillMapping" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -443,8 +499,8 @@
           <Property Name="CountryId" Type="Int32" Nullable="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Addresses" Relationship="Self.FK__Address__StateId__1F98B2C1" FromRole="State" ToRole="Address" />
-          <NavigationProperty Name="Country" Relationship="Self.FK__State__CountryId__1CBC4616" FromRole="State" ToRole="Country" />
+          <NavigationProperty Name="Addresses" Relationship="EMSModel.FK__Address__StateId__1F98B2C1" FromRole="State" ToRole="Address" />
+          <NavigationProperty Name="Country" Relationship="EMSModel.FK__State__CountryId__1CBC4616" FromRole="State" ToRole="Country" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -457,11 +513,11 @@
           <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
           <Property Name="RoleId" Type="Int32" />
           <Property Name="StatusId" Type="Int16" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__UserId__2B0A656D" FromRole="User" ToRole="Employee" />
+          <NavigationProperty Name="Employees" Relationship="EMSModel.FK__Employee__UserId__2B0A656D" FromRole="User" ToRole="Employee" />
         </EntityType>
         <Association Name="FK__Address__Country__208CD6FA">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <End Type="EMSModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="EMSModel.Address" Role="Address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="CountryId" />
@@ -472,8 +528,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Address__StateId__1F98B2C1">
-          <End Role="State" Type="Self.State" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <End Type="EMSModel.State" Role="State" Multiplicity="1" />
+          <End Type="EMSModel.Address" Role="Address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="State">
               <PropertyRef Name="StateId" />
@@ -484,8 +540,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Employee__Addres__2180FB33">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Type="EMSModel.Address" Role="Address" Multiplicity="1" />
+          <End Type="EMSModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Address">
               <PropertyRef Name="AddressId" />
@@ -496,8 +552,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__State__CountryId__1CBC4616">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <End Type="EMSModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="EMSModel.State" Role="State" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="CountryId" />
@@ -508,8 +564,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Employee__Depart__29221CFB">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Type="EMSModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="EMSModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
               <PropertyRef Name="DepartmentID" />
@@ -520,8 +576,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Employee__UserId__2B0A656D">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Type="EMSModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="EMSModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="id" />
@@ -532,8 +588,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__EmployeeH__Emplo__42E1EEFE">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="EmployeeHobbiesMaping" Type="Self.EmployeeHobbiesMaping" Multiplicity="*" />
+          <End Type="EMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EMSModel.EmployeeHobbiesMaping" Role="EmployeeHobbiesMaping" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Empid" />
@@ -544,8 +600,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__EmployeeS__Emplo__40F9A68C">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="EmployeeSkillMapping" Type="Self.EmployeeSkillMapping" Multiplicity="*" />
+          <End Type="EMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EMSModel.EmployeeSkillMapping" Role="EmployeeSkillMapping" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Empid" />
@@ -556,8 +612,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Image__Empid__503BEA1C">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="MediaFile" Type="Self.MediaFile" Multiplicity="*" />
+          <End Type="EMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EMSModel.MediaFile" Role="MediaFile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Empid" />
@@ -568,10 +624,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__EmployeeH__Hobbi__43D61337">
-          <End Role="Hobbies" Type="Self.Hobby" Multiplicity="1" />
-          <End Role="EmployeeHobbiesMaping" Type="Self.EmployeeHobbiesMaping" Multiplicity="*" />
+          <End Type="EMSModel.Hobby" Role="Hobby" Multiplicity="1" />
+          <End Type="EMSModel.EmployeeHobbiesMaping" Role="EmployeeHobbiesMaping" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Hobbies">
+            <Principal Role="Hobby">
               <PropertyRef Name="HobbiesId" />
             </Principal>
             <Dependent Role="EmployeeHobbiesMaping">
@@ -580,8 +636,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__EmployeeS__Skill__41EDCAC5">
-          <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
-          <End Role="EmployeeSkillMapping" Type="Self.EmployeeSkillMapping" Multiplicity="*" />
+          <End Type="EMSModel.Skill" Role="Skill" Multiplicity="1" />
+          <End Type="EMSModel.EmployeeSkillMapping" Role="EmployeeSkillMapping" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Skill">
               <PropertyRef Name="SkillId" />
@@ -591,63 +647,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EMSEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Addresses" EntityType="Self.Address" />
-          <EntitySet Name="Countries" EntityType="Self.Country" />
-          <EntitySet Name="Departments" EntityType="Self.Department" />
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
-          <EntitySet Name="EmployeeHobbiesMapings" EntityType="Self.EmployeeHobbiesMaping" />
-          <EntitySet Name="EmployeeSkillMappings" EntityType="Self.EmployeeSkillMapping" />
-          <EntitySet Name="Hobbies" EntityType="Self.Hobby" />
-          <EntitySet Name="MediaFiles" EntityType="Self.MediaFile" />
-          <EntitySet Name="Skills" EntityType="Self.Skill" />
-          <EntitySet Name="States" EntityType="Self.State" />
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK__Address__Country__208CD6FA" Association="Self.FK__Address__Country__208CD6FA">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Address__StateId__1F98B2C1" Association="Self.FK__Address__StateId__1F98B2C1">
-            <End Role="State" EntitySet="States" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employee__Addres__2180FB33" Association="Self.FK__Employee__Addres__2180FB33">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK__State__CountryId__1CBC4616" Association="Self.FK__State__CountryId__1CBC4616">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="State" EntitySet="States" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employee__Depart__29221CFB" Association="Self.FK__Employee__Depart__29221CFB">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Employee__UserId__2B0A656D" Association="Self.FK__Employee__UserId__2B0A656D">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EmployeeH__Emplo__42E1EEFE" Association="Self.FK__EmployeeH__Emplo__42E1EEFE">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmployeeHobbiesMaping" EntitySet="EmployeeHobbiesMapings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EmployeeS__Emplo__40F9A68C" Association="Self.FK__EmployeeS__Emplo__40F9A68C">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmployeeSkillMapping" EntitySet="EmployeeSkillMappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Image__Empid__503BEA1C" Association="Self.FK__Image__Empid__503BEA1C">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="MediaFile" EntitySet="MediaFiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EmployeeH__Hobbi__43D61337" Association="Self.FK__EmployeeH__Hobbi__43D61337">
-            <End Role="Hobbies" EntitySet="Hobbies" />
-            <End Role="EmployeeHobbiesMaping" EntitySet="EmployeeHobbiesMapings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__EmployeeS__Skill__41EDCAC5" Association="Self.FK__EmployeeS__Skill__41EDCAC5">
-            <End Role="Skill" EntitySet="Skills" />
-            <End Role="EmployeeSkillMapping" EntitySet="EmployeeSkillMappings" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -657,130 +656,130 @@
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="EMSModel.Address">
               <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
-                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="LandMark" ColumnName="LandMark" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="LandMark" ColumnName="LandMark" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="EMSModel.Country">
               <MappingFragment StoreEntitySet="Country">
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="EMSModel.Department">
               <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="EMSModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Empid" ColumnName="Empid" />
-                <ScalarProperty Name="Fname" ColumnName="Fname" />
-                <ScalarProperty Name="Lname" ColumnName="Lname" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="Doj" ColumnName="Doj" />
-                <ScalarProperty Name="Pan" ColumnName="Pan" />
-                <ScalarProperty Name="Aadhar" ColumnName="Aadhar" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
-                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Aadhar" ColumnName="Aadhar" />
+                <ScalarProperty Name="Pan" ColumnName="Pan" />
+                <ScalarProperty Name="Doj" ColumnName="Doj" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Empid" ColumnName="Empid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeHobbiesMapings">
             <EntityTypeMapping TypeName="EMSModel.EmployeeHobbiesMaping">
               <MappingFragment StoreEntitySet="EmployeeHobbiesMaping">
-                <ScalarProperty Name="EmployeeHobbiesMapingId" ColumnName="EmployeeHobbiesMapingId" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="HobbiesId" ColumnName="HobbiesId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeHobbiesMapingId" ColumnName="EmployeeHobbiesMapingId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeSkillMappings">
             <EntityTypeMapping TypeName="EMSModel.EmployeeSkillMapping">
               <MappingFragment StoreEntitySet="EmployeeSkillMapping">
-                <ScalarProperty Name="EmployeeSkillMapingId" ColumnName="EmployeeSkillMapingId" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="SkillID" ColumnName="SkillID" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeSkillMapingId" ColumnName="EmployeeSkillMapingId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Hobbies">
             <EntityTypeMapping TypeName="EMSModel.Hobby">
               <MappingFragment StoreEntitySet="Hobbies">
-                <ScalarProperty Name="HobbiesId" ColumnName="HobbiesId" />
-                <ScalarProperty Name="HobbyName" ColumnName="HobbyName" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="HobbyName" ColumnName="HobbyName" />
+                <ScalarProperty Name="HobbiesId" ColumnName="HobbiesId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MediaFiles">
             <EntityTypeMapping TypeName="EMSModel.MediaFile">
               <MappingFragment StoreEntitySet="MediaFile">
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-                <ScalarProperty Name="Empid" ColumnName="Empid" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="Empid" ColumnName="Empid" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Skills">
             <EntityTypeMapping TypeName="EMSModel.Skill">
               <MappingFragment StoreEntitySet="Skill">
-                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
-                <ScalarProperty Name="SkillName" ColumnName="SkillName" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="SkillName" ColumnName="SkillName" />
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="States">
             <EntityTypeMapping TypeName="EMSModel.State">
               <MappingFragment StoreEntitySet="State">
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
-                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
-                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="EMSModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
-                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

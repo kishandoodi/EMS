@@ -15,8 +15,8 @@ namespace WebApp_complete.Data
     public partial class MediaFile
     {
         public int ImageId { get; set; }
-        public string Title { get; set; }
-        public string ImagePath { get; set; }
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
         public int Empid { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public short StatusId { get; set; }

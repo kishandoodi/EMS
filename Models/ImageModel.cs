@@ -10,10 +10,10 @@ namespace WebApp_complete.Models
     public class ImageModel
     {
         public int ImageId { get; set; }
-        public string Title { get; set; }
+        public string FileName { get; set; }
         
 
-        public string ImagePath { get; set; }
+        public string FilePath { get; set; }
 
         
 

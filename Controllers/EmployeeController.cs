@@ -16,7 +16,7 @@ namespace WebApp_complete.Controllers
     {
         readonly EMSEntities dbObj = new EMSEntities();
 
-        
+
 
         public ActionResult Create()
         {
@@ -144,7 +144,7 @@ namespace WebApp_complete.Controllers
             {
                 Empid = e.Empid,
                 Fname = e.Fname,
-                Lname = e.Lname,    
+                Lname = e.Lname,
                 Doj = e.Doj,
                 Age = e.Age,
                 Pan = e.Pan,
@@ -172,8 +172,8 @@ namespace WebApp_complete.Controllers
                 MediaFiles = e.MediaFiles.Select(a => new ImageModel
                 {
 
-                    Title = a.Title,
-                    ImagePath = a.ImagePath + "/" + a.Title
+                    FileName = a.FileName,
+                    FilePath = a.FilePath + "/" + a.FileName
                 }).FirstOrDefault()
 
 
@@ -206,11 +206,11 @@ namespace WebApp_complete.Controllers
 
             }).FirstOrDefault();
 
-            var Image = dbObj.MediaFiles.Select(a => new ImageModel
+            var Image = dbObj.MediaFiles.Where(x => x.Empid == Id).Select(a => new ImageModel
             {
 
-                Title = a.Title,
-                ImagePath = a.ImagePath + "/" + a.Title
+                FileName = a.FileName,
+                FilePath = a.FilePath + "/" + a.FileName
             }).FirstOrDefault();
 
             var stateList = dbObj.States.Select(s => new SelectListItem
@@ -280,33 +280,46 @@ namespace WebApp_complete.Controllers
             var empl = dbObj.Employees.Where(s => s.Empid == model.Empid).FirstOrDefault();
             if (file != null)
             {
-                MediaFile obj1 = new MediaFile ();
                 var allowedExtensions = new[]
                 {
                 ".Jpg", ".png", ".jpg", "jpeg"
 
              };
 
-                obj1.ImagePath = "~/Media/Emp";
-                obj1.Empid = model.Empid;
-                obj1.CreatedDateTime = DateTime.Now;
+
                 var fileName = Path.GetFileName(file.FileName);
                 var ext = Path.GetExtension(file.FileName);
 
                 if (allowedExtensions.Contains(ext))
                 {
                     string name = Path.GetFileNameWithoutExtension(fileName);
-                    string myfile = "Emp_" + model.Empid + ext;
-                    var path = Path.Combine(Server.MapPath("~/Media/Emp"), myfile);
-                 
-                    obj1.Title = myfile;
-                    
-                    string Old = Request.MapPath(("~/Media/Emp").ToString());
-                    
-                    if (System.IO.File.Exists(Old))
+                    //string myfile = fileName;
+                    var path = Path.Combine(Server.MapPath("~/Media/Emp"), fileName);
+
+                    if (empl.MediaFiles.Any())
                     {
-                        System.IO.File.Delete(Old);
+                        var tmp = empl.MediaFiles.First();
+                        string Old = Request.MapPath("~/Media/Emp/" + tmp.FileName);
+
+                        if (System.IO.File.Exists(Old))
+                        {
+                            System.IO.File.Delete(Old);
+                        }
+                        empl.MediaFiles.First().FileName = fileName;
                     }
+                    else
+                    {
+                        MediaFile obj1 = new MediaFile();
+                        obj1.FilePath = "Media/Emp";
+                        obj1.Empid = model.Empid;
+                        obj1.CreatedDateTime = DateTime.Now;
+                        obj1.FileName = fileName;
+                        obj1.StatusId = 1;
+                        empl.MediaFiles = new List<MediaFile>();
+                        empl.MediaFiles.Add(obj1);
+                    }
+
+
 
                     file.SaveAs(path);
                 }
@@ -398,7 +411,7 @@ namespace WebApp_complete.Controllers
 
             dbObj.EmployeeHobbiesMapings.RemoveRange(mappingHobby);
 
-           var Img = dbObj.MediaFiles.Where(x => x.Empid == id).First();
+            var Img = dbObj.MediaFiles.Where(x => x.Empid == id).First();
 
             dbObj.MediaFiles.Remove(Img);
 
@@ -434,11 +447,11 @@ namespace WebApp_complete.Controllers
                 MediaFiles = e.MediaFiles.Select(a => new ImageModel
                 {
 
-                    Title = a.Title,
-                    ImagePath = a.ImagePath + "/" + a.Title
+                    FileName = a.FileName,
+                    FilePath = a.FilePath + "/" + a.FileName
                 }).FirstOrDefault(),
 
-            Skills = e.EmployeeSkillMappings.Select(a => new CheckModel
+                Skills = e.EmployeeSkillMappings.Select(a => new CheckModel
                 {
                     Name = a.Skill.SkillName,
                     Id = a.Skill.SkillId,
@@ -487,7 +500,7 @@ namespace WebApp_complete.Controllers
          ".Jpg", ".png", ".jpg", "jpeg"
     };
 
-                    obj1.ImagePath = "Media/Emp";
+                    obj1.FilePath = "Media/Emp";
                     obj1.Empid = empId;
                     obj1.CreatedDateTime = DateTime.Now;
                     obj1.StatusId = 1;
@@ -497,10 +510,10 @@ namespace WebApp_complete.Controllers
                     if (allowedExtensions.Contains(ext))
                     {
                         string name = Path.GetFileNameWithoutExtension(fileName);
-                        string myfile = "Emp_" + empId + ext;
-                        var path = Path.Combine(Server.MapPath("Media/Emp"), myfile);
-        
-                        obj1.Title = myfile;
+                        string myfile = fileName;
+                        var path = Path.Combine(Server.MapPath("~/Media/Emp"), myfile);
+
+                        obj1.FileName = myfile;
                         dbObj.MediaFiles.Add(obj1);
                         dbObj.SaveChanges();
                         file.SaveAs(path);

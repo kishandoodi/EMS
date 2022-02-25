@@ -16,13 +16,13 @@
     <!--@Html.ValidationSummary(true, "", new { @class = "text-danger" })-->
     @Html.HiddenFor(model => model.Empid)
     <div class="form-group">
-        @Html.LabelFor(model => model.MediaFiles.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.MediaFiles.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
 
 
             @if (Model.MediaFiles != null)
             {
-                <img src="~/@Model.MediaFiles.ImagePath"
+                <img src="~/@Model.MediaFiles.FilePath"
                      class="rounded-circle"
                      height="80" width="80" />
 
