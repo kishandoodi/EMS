@@ -41,7 +41,7 @@ namespace WebApp_complete.Controllers
             obj.HobbyName = Model.Hobbies;
 
             obj.CreatedDateTime = DateTime.Now;
-            obj.ModifiedDateTime = DateTime.Now;
+            //obj.ModifiedDateTime = DateTime.Now;
             dbObj.Hobbies.Add(obj);
             dbObj.SaveChanges();
             return RedirectToAction("Index");

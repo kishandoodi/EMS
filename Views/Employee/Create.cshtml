@@ -76,102 +76,102 @@
             @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
         </div>
     </div>
-    <h3>Skills:</h3>
-    @for (int i = 0; i < Model.Skills.Count(); i++)
-
-    {
-
-        @Html.CheckBoxFor(m => m.Skills[i].Checked, new { @class = "flat" })
-
-        @Html.DisplayFor(m => m.Skills[i].Name)
-
-        @Html.HiddenFor(m => m.Skills[i].Id)
-
-    }
-
-    <h3>Hobbies:</h3>
-    @for (int i = 0; i < Model.Hobbies.Count(); i++)
-
-    {
-
-        @Html.CheckBoxFor(m => m.Hobbies[i].Checked, new { @class = "flat" })
-
-        @Html.DisplayFor(m => m.Hobbies[i].Name)
-
-        @Html.HiddenFor(m => m.Hobbies[i].Id)
-
-    }
-
-    <h4>Address:</h4>
     <div class="form-group">
-        @Html.LabelFor(model => model.AddressLine1, "AddressLine1", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Skills, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.AddressLine1, "", new { @class = "text-danger" })
+            @for (int i = 0; i < Model.Skills.Count(); i++)
+
+            {
+
+                @Html.CheckBoxFor(m => m.Skills[i].Checked, new { @class = "flat" })
+
+                @Html.DisplayFor(m => m.Skills[i].Name)
+
+                @Html.HiddenFor(m => m.Skills[i].Id)
+
+            }
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.AddressLine2, "AddressLine2", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Hobbies, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.LandMark, "LandMark", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.LandMark, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.LandMark, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.ZipCode, "ZipCode", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.CountryId, "Country", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.CountryId, Model.Countries, "Please select Country", new { @class = "form-control" })
-            @*@Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })*@
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.StateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.StateId, Model.States, "Please select State", new { @class = "form-control" })
-            @*@Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })*@
-        </div>
-    </div>
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.Image.Title, "Image Title", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Image.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Image.Title, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.MediaFiles.FilePath,  htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+            @for (int i = 0; i < Model.Hobbies.Count(); i++)
 
-            <input type="File" title="ImageFile" id="File" name="File" />
+            {
+
+                @Html.CheckBoxFor(m => m.Hobbies[i].Checked, new { @class = "flat" })
+
+                @Html.DisplayFor(m => m.Hobbies[i].Name)
+
+                @Html.HiddenFor(m => m.Hobbies[i].Id)
+
+            }
+            </div>
         </div>
-    </div>
+            <h4>Address:</h4>
+            <div class="form-group">
+                @Html.LabelFor(model => model.AddressLine1, "AddressLine1", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AddressLine1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.AddressLine2, "AddressLine2", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LandMark, "LandMark", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LandMark, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LandMark, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ZipCode, "ZipCode", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CountryId, "Country", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.CountryId, Model.Countries, "Please select Country", new { @class = "form-control" })
+                    @*@Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.StateId, "State", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.StateId, Model.States, "Please select State", new { @class = "form-control" })
+                    @*@Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.MediaFiles.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    <input type="File" title="ImageFile" id="File" name="File" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+
         </div>
-    </div>
+        }
 
-</div>
-}
+        <div>
+            @Html.ActionLink("Back to List", "List")
+        </div>
 
-<div>
-    @Html.ActionLink("Back to List", "List")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

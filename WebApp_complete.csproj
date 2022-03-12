@@ -133,6 +133,7 @@
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HobbiesController.cs" />
+    <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\SkillController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Data\Address.cs">
@@ -281,9 +282,11 @@
     <Content Include="Views\Countries\Details.cshtml" />
     <Content Include="Views\Countries\Edit.cshtml" />
     <Content Include="Views\Countries\Index.cshtml" />
+    <Content Include="Views\Shared\_Partial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Media\Emp\" />
+    <Folder Include="Views\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
